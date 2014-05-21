@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animations>
+<Anim id="0">
+	<name>null</name>
+	<sound>null</sound>
+	<Color>
+		<R>1.0</R>
+		<G>1.0</G>
+		<B>1.0</B>
+		<A>1.0</A>
+	</Color>
+	<columns>1</columns>
+	<rows>1</rows>
+	<frames>0</frames>
+	<timings length="0"/>
+	<Blend>0</Blend>
+</Anim>
+</animations>

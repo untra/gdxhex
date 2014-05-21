@@ -1,0 +1,44 @@
+<battleitems>
+	<BattleItem>
+		<Item id="0">
+			<name>NULL</name>
+			<description>???</description>
+			<price>1</price>
+			<Item_Use>1</Item_Use>
+			<Skill_Scope>1</Skill_Scope>
+		</Item>
+		<HP_Recovery_rate>0.0</HP_Recovery_rate>
+		<SP_Recovery_rate>0.0</SP_Recovery_rate>
+		<HP_Recovery_value>0</HP_Recovery_value>
+		<SP_Recovery_value>0</SP_Recovery_value>
+		<accuracy>1.0</accuracy>
+		<variance>0.15</variance>
+		<range>0</range>
+		<field>0</field>
+		<anim_use_id>0</anim_use_id>
+		<anim_hit_id>0</anim_hit_id>
+		<plus_states length="0" />
+		<minus_states length="0" />
+	</BattleItem>
+	<BattleItem>
+		<Item id="1">
+			<name>Health Tonic</name>
+			<description>Its like hand sanitizer, just drinkable.</description>
+			<price>30</price>
+			<Item_Use>1</Item_Use>
+			<Skill_Scope>1</Skill_Scope>
+		</Item>
+		<HP_Recovery_rate>0.0</HP_Recovery_rate>
+		<SP_Recovery_rate>0.0</SP_Recovery_rate>
+		<HP_Recovery_value>15</HP_Recovery_value>
+		<SP_Recovery_value>0</SP_Recovery_value>
+		<accuracy>1.0</accuracy>
+		<variance>0.15</variance>
+		<range>1</range>
+		<field>0</field>
+		<anim_use_id>0</anim_use_id>
+		<anim_hit_id>0</anim_hit_id>
+		<plus_states length="0" />
+		<minus_states length="0" />
+	</BattleItem>
+</battleitems>

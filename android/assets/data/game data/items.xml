@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.Collections.Generic.List[DatabaseLib.Item]">
+
+    
+      <Item>
+        <ID>1</ID>
+        <Name>Health Tonic</Name>
+        <Description>Description Needed!</Description>
+        <Price>30</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>15</HP_Recovery_value>
+        <HP_Recovery_rate>0</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>2</ID>
+        <Name>Strong Medicine</Name>
+        <Description>Description Needed!</Description>
+        <Price>70</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>40</HP_Recovery_value>
+        <HP_Recovery_rate>0</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>3</ID>
+        <Name>Restorative Elixir</Name>
+        <Description>Description Needed!</Description>
+        <Price>175</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>100</HP_Recovery_value>
+        <HP_Recovery_rate>0</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>4</ID>
+        <Name>Ultra medicine</Name>
+        <Description>Description Needed!</Description>
+        <Price>500</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>250</HP_Recovery_value>
+        <HP_Recovery_rate>0</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>5</ID>
+        <Name>Percentage Healer</Name>
+        <Description>Description Needed!</Description>
+        <Price>175</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>0</HP_Recovery_value>
+        <HP_Recovery_rate>50</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>6</ID>
+        <Name>Interesting Potion</Name>
+        <Description>Description Needed!</Description>
+        <Price>375</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>0</HP_Recovery_value>
+        <HP_Recovery_rate>75</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+      <Item>
+        <ID>7</ID>
+        <Name>Heal all</Name>
+        <Description>Description Needed!</Description>
+        <Price>600</Price>
+        <Scope>2</Scope>
+        <Use>0</Use>
+        <HP_Recovery_value>0</HP_Recovery_value>
+        <HP_Recovery_rate>100</HP_Recovery_rate>
+        <SP_Recovery_value>0</SP_Recovery_value>
+        <SP_Recovery_rate>0</SP_Recovery_rate>
+        <Accuracy>1</Accuracy>
+        <Variance>0</Variance>
+        <Parameter>0</Parameter>
+        <parameter_increase>0</parameter_increase>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+      </Item>
+    
+  </Asset>
+</XnaContent>

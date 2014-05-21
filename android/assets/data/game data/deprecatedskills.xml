@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<XnaContent>
+  <!-- TODO: replace this Asset with your own XML asset data. -->
+  <Asset Type="System.Collections.Generic.List[DatabaseLib.Skill]">
+
+ 
+      <Item>
+        <ID>1</ID>
+        <Name>Arcane Missile</Name>
+        <Description>Generic Apprentice attack. Tends to be quite weak.</Description>
+        <Scope>1</Scope>
+        <Element>0</Element>
+        <Type>2</Type>
+        <SP_cost>4</SP_cost>
+        <Power>0.85</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>2</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>true</line>
+      </Item>
+      <Item>
+        <ID>2</ID>
+        <Name>Fire Ball</Name>
+        <Description>Early Fire Spell.</Description>
+        <Scope>1</Scope>
+        <Element>1</Element>
+        <Type>2</Type>
+        <SP_cost>8</SP_cost>
+        <Power>0.95</Power>
+        <Variance>0.2</Variance>
+        <is_spell>true</is_spell>
+        <range>2</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>3</ID>
+        <Name>Ice Blast</Name>
+        <Description>Simple Ice Spell</Description>
+        <Scope>1</Scope>
+        <Element>2</Element>
+        <Type>2</Type>
+        <SP_cost>12</SP_cost>
+        <Power>1</Power>
+        <Variance>0.2</Variance>
+        <is_spell>true</is_spell>
+        <range>2</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>true</line>
+      </Item>
+      <Item>
+        <ID>4</ID>
+        <Name>Lighning Strike</Name>
+        <Description>Fry your enemies</Description>
+        <Scope>1</Scope>
+        <Element>3</Element>
+        <Type>2</Type>
+        <SP_cost>16</SP_cost>
+        <Power>1.05</Power>
+        <Variance>0.2</Variance>
+        <is_spell>true</is_spell>
+        <range>3</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>5</ID>
+        <Name>Meteor</Name>
+        <Description>Summon an angry meteor from the sky</Description>
+        <Scope>1</Scope>
+        <Element>1</Element>
+        <Type>2</Type>
+        <SP_cost>22</SP_cost>
+        <Power>0.95</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>4</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>1</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>6</ID>
+        <Name>Freeze Ray</Name>
+        <Description>Does lots of ice damage</Description>
+        <Scope>1</Scope>
+        <Element>2</Element>
+        <Type>2</Type>
+        <SP_cost>26</SP_cost>
+        <Power>1</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>4</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>1</field>
+        <line>true</line>
+      </Item>
+      <Item>
+        <ID>7</ID>
+        <Name>Ion Storm</Name>
+        <Description>A devastating Thunder storm</Description>
+        <Scope>1</Scope>
+        <Element>3</Element>
+        <Type>2</Type>
+        <SP_cost>30</SP_cost>
+        <Power>1.05</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>5</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>1</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>8</ID>
+        <Name>Geyser</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>4</Element>
+        <Type>2</Type>
+        <SP_cost>35</SP_cost>
+        <Power>1.4</Power>
+        <Variance>0.15</Variance>
+        <is_spell>true</is_spell>
+        <range>5</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>9</ID>
+        <Name>Mountain Shift</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>5</Element>
+        <Type>2</Type>
+        <SP_cost>40</SP_cost>
+        <Power>1.45</Power>
+        <Variance>0.15</Variance>
+        <is_spell>true</is_spell>
+        <range>6</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>true</line>
+      </Item>
+      <Item>
+        <ID>10</ID>
+        <Name>Aero Strike</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>6</Element>
+        <Type>2</Type>
+        <SP_cost>45</SP_cost>
+        <Power>1.5</Power>
+        <Variance>0.15</Variance>
+        <is_spell>true</is_spell>
+        <range>6</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>0</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>11</ID>
+        <Name>Tsunami</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>4</Element>
+        <Type>2</Type>
+        <SP_cost>54</SP_cost>
+        <Power>1.05</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>6</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>1</field>
+        <line>false</line>
+      </Item>
+      <Item>
+        <ID>12</ID>
+        <Name>Tectonic Shift</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>5</Element>
+        <Type>2</Type>
+        <SP_cost>59</SP_cost>
+        <Power>1.1</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>7</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>1</field>
+        <line>true</line>
+      </Item>
+      <Item>
+        <ID>13</ID>
+        <Name>Tornado</Name>
+        <Description>DESCRIPTION NEEDED</Description>
+        <Scope>1</Scope>
+        <Element>6</Element>
+        <Type>2</Type>
+        <SP_cost>64</SP_cost>
+        <Power>1.15</Power>
+        <Variance>0.25</Variance>
+        <is_spell>true</is_spell>
+        <range>7</range>
+        <Anim_use_id>0</Anim_use_id>
+        <Anim_hit_id>0</Anim_hit_id>
+        <Common_Event_id>0</Common_Event_id>
+        <field>2</field>
+        <line>false</line>
+      </Item>
+    
+
+  </Asset>
+</XnaContent>
