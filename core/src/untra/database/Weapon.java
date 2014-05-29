@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import untra.driver.IXml;
 
-public class Weapon implements IXml<Weapon>, Idata {
+public class Weapon extends DatabaseObject implements IXml<Weapon>, Idata {
 
 	private static final int DEFAULT_USE_ANIM = 0;
 	private static final int DEFAULT_HIT_ANIM = 0;
@@ -27,9 +27,15 @@ public class Weapon implements IXml<Weapon>, Idata {
 	public boolean line;
 	public int use_anim_id;
 	public int hit_anim_id;
+	public int durability_max;
+	public boolean two_handed;
+	
 
 	public Skill_Type damage_type() {
 		switch (type) {
+		case Lances:
+			return Skill_Type.SKL;
+			
 		case Staves:
 			return Skill_Type.MND;
 
@@ -42,6 +48,9 @@ public class Weapon implements IXml<Weapon>, Idata {
 		case Bows:
 			return Skill_Type.SKL;
 
+		case Axes:
+			return two_handed ? Skill_Type.POW : Skill_Type.SKL;
+			
 		default:
 			return Skill_Type.POW;
 
@@ -64,6 +73,31 @@ public class Weapon implements IXml<Weapon>, Idata {
 		line = false;
 		use_anim_id = DEFAULT_USE_ANIM;
 		hit_anim_id = DEFAULT_HIT_ANIM;
+		sanitize();
+	}
+	
+	public Weapon(Data d) {
+		super(d);
+		type = Weapon_Type.values()[d.getInt("type")];
+		ATK = d.getInt("ATK");
+		POW = d.getInt("POW");
+		SKL = d.getInt("SKL");
+		MND = d.getInt("MND");
+		MOV = d.getInt("MOV");
+		VSN = d.getInt("VSN");
+		SPD = d.getInt("SPD");
+		range = d.getInt("range");
+		line =  d.getBool("line");
+		use_anim_id = d.getInt("use_anim_id");
+		hit_anim_id = d.getInt("hit_anim_id");
+		durability_max = d.getInt("durability_max");
+		two_handed = d.getBool("two_handed");
+		sanitize();
+	}
+	
+	private void sanitize()
+	{
+		durability_max = Math.max(Math.min(durability_max, 160), 20);
 	}
 
 	@Override

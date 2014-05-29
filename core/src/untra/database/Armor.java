@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import untra.driver.IXml;
 
-public class Armor implements IXml<Armor>, Idata {
+public class Armor extends DatabaseObject implements IXml<Armor>, Idata {
 
 	public int id;
 	public String name;
@@ -37,6 +37,20 @@ public class Armor implements IXml<Armor>, Idata {
 		SPD = 0;
 		HPP = 0;
 		SPP = 0;
+	}
+	
+	public Armor(Data d) {
+		super(d);
+		type = Armor_Type.values()[d.getInt("type")];
+		DEF = d.getInt("DEF");
+		POW = d.getInt("POW");
+		SKL = d.getInt("SKL");
+		MND = d.getInt("MND");
+		MOV = d.getInt("MOV");
+		VSN = d.getInt("VSN");
+		SPD = d.getInt("SPD");
+		HPP = d.getInt("HPP");
+		SPP = d.getInt("SPP");
 	}
 
 	@Override

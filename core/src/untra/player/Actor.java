@@ -38,7 +38,7 @@ public class Actor implements IXml<Actor> {
 	public Armor armor = new Armor();
 
 	/**
-	 * 0 - ATK 1 - DEF 2 - SPD 3 - ACC 4 - EVA
+	 * 0 - ATK, 1 - DEF, 2 - SPD, 3 - ACC, 4 - EVA
 	 */
 	public int[] stat_modifiers = new int[5];
 	public ArrayList<Status> states;

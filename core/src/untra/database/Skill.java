@@ -51,6 +51,27 @@ public class Skill implements IXml<Skill>, Idata, IRanged {
 		level_cost = 0;
 		accuracy = 1.0f;
 	}
+	
+	public Skill(Data d) {
+		id = (int) d.properties().get("id");
+		name = (String) d.properties().get("name");
+		description = (String) d.properties().get("description");
+		scope = Skill_Scope.values()[(int) d.properties().get("scope")];
+		element = Elemental.values()[(int) d.properties().get("element")];
+		type = Skill_Type.values()[(int) d.properties().get("type")];
+		sp_cost = (int) d.properties().get("sp_cost");
+		power = (float) d.properties().get("power");
+		variance = (float) d.properties().get("variance");
+		is_spell = (boolean) d.properties().get("is_spell");
+		is_line = (boolean) d.properties().get("is_line");
+		range = (int) d.properties().get("range");
+		anim_use_id = (int) d.properties().get("anim_use_id");
+		anim_hit_id = (int) d.properties().get("anim_hit_id");
+		common_event_id = (int) d.properties().get("common_event_id");
+		field = (int) d.properties().get("field");
+		level_cost = (int) d.properties().get("level_cost");
+		accuracy = (float) d.properties().get("accuracy");
+	}
 
 	public int Range() {
 		return range;

@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 public class Database {
 
-	private static final String ROOT = "data/game data/";
+	private static final String ROOT = "data/game/";
 
 	public static Animation[] animations = new Animation[256];
 	public static Klass[] classes = new Klass[256];
@@ -148,15 +148,24 @@ public class Database {
 			ex.printStackTrace();
 		}
 		try {
-			element = reader.parse(Gdx.files.internal(ROOT + "weapons.xml"));
-			// weapons
-			ArrayList<Weapon> set = new ArrayList<Weapon>();
-			Weapon type = new Weapon();
-			for (int x = 0; x < element.getChildCount(); x++) {
-				e = element.getChild(x);
-				set.add(type.xmlRead(e));
+//			element = reader.parse(Gdx.files.internal(ROOT + "weapons.xml"));
+//			// weapons
+//			ArrayList<Weapon> set = new ArrayList<Weapon>();
+			
+//			Weapon type = new Weapon();
+//			for (int x = 0; x < element.getChildCount(); x++) {
+//				e = element.getChild(x);
+//				set.add(type.xmlRead(e));
+//			}
+//			weapons = set.toArray(weapons);
+			ArrayList<Data> set = Data.load(ROOT + "weapons.csv");
+			int size = set.size();
+			weapons = new Weapon[size];
+			for(int i = 0 ; i < size ; i++)
+			{
+				weapons[i] = new Weapon(set.get(i));
 			}
-			weapons = set.toArray(weapons);
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

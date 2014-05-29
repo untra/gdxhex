@@ -1,0 +1,14 @@
+id,name,description,Wtype,ATK,POW,SKL,MND,MOV,VSN,SPD,range,line,use_anim_id,hit_anim_id
+0,Staff,TODO set this,0,9,0,0,0,0,0,0,1,FALSE,0,0
+1,Bow,TODO set this,1,18,0,3,0,0,0,0,5,FALSE,0,0
+2,Broadsword,TODO set this,2,22,0,0,0,0,0,0,1,FALSE,0,0
+3,Claw,TODO set this,3,13,0,0,0,0,0,5,1,FALSE,0,0
+4,Wand,TODO set this,4,7,0,0,3,0,0,0,1,FALSE,0,0
+5,Gun,TODO set this,5,20,0,0,0,0,0,0,6,TRUE,0,0
+6,Sword,TODO set this,6,18,3,0,0,0,0,0,1,FALSE,0,0
+7,Mace,TODO set this,7,13,0,0,0,0,0,0,1,FALSE,0,0
+8,Hammer,TODO set this,8,26,0,0,0,0,0,0,1,FALSE,0,0
+9,Lance,TODO set this,9,26,0,0,0,0,0,0,1,TRUE,0,0
+10,Axe,TODO set this,10,26,0,0,0,0,0,0,1,FALSE,0,0
+11,Knife,TODO set this,11,16,0,0,0,0,0,0,1,FALSE,0,0
+12,Bomb,TODO set this,12,14,0,0,0,0,0,0,3,FALSE,0,0
