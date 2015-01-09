@@ -7,10 +7,10 @@ package untra.database;
  * @author samuel
  * 
  */
-public class ActiveSkills {
-
+public class ActiveSkills extends Skill{
+	
 	public static Skill Flame(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 10 + scale;
 		skill.element = Elemental.Fire;
 		skill.name = "Pyron " + scale;
@@ -21,12 +21,12 @@ public class ActiveSkills {
 		skill.power = 0.3f + (scale * 0.35f);
 		skill.range = 1 + scale;
 		skill.field = (scale / 3) >= 1 ? 1 : 0;
-		skill.level_cost = (scale + 1) + ((scale - 1) * scale);
+//		skill.level_cost = (scale + 1) + ((scale - 1) * scale);
 		return skill;
 	}
 
 	public static Skill Ice(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 20 + scale;
 		skill.element = Elemental.Ice;
 		skill.name = "Cryon " + scale;
@@ -37,12 +37,12 @@ public class ActiveSkills {
 		skill.power = 0.5f + (scale * 0.20f);
 		skill.range = 1 + scale;
 		skill.field = (scale / 2);
-		skill.level_cost = (scale + 2) + ((scale - 1) * scale);
+//		skill.level_cost = (scale + 2) + ((scale - 1) * scale);
 		return skill;
 	}
 
 	public static Skill Lightning(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 30 + scale;
 		skill.element = Elemental.Thunder;
 		skill.name = "Electro " + scale;
@@ -53,12 +53,12 @@ public class ActiveSkills {
 		skill.power = 0.4f + (scale * 0.25f);
 		skill.range = 2 * scale;
 		skill.field = 0;
-		skill.level_cost = (scale + 3) + ((scale - 1) * scale);
+//		skill.level_cost = (scale + 3) + ((scale - 1) * scale);
 		return skill;
 	}
 
 	public static Skill Earth(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 40 + scale;
 		skill.element = Elemental.Earth;
 		skill.name = "Terran " + scale;
@@ -70,12 +70,12 @@ public class ActiveSkills {
 		skill.power = 0.4f + (scale * 0.30f);
 		skill.range = 1 + scale;
 		skill.field = 0;
-		skill.level_cost = (scale + 4) + ((scale - 2) * scale);
+//		skill.level_cost = (scale + 4) + ((scale - 2) * scale);
 		return skill;
 	}
 
 	public static Skill Water(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 50 + scale;
 		skill.element = Elemental.Fire;
 		skill.name = "Aqua " + scale;
@@ -87,12 +87,12 @@ public class ActiveSkills {
 		skill.power = 0.6f + (scale * 0.15f);
 		skill.range = 2 + scale;
 		skill.field = 0;
-		skill.level_cost = (scale + 5) + ((scale - 2) * scale);
+//		skill.level_cost = (scale + 5) + ((scale - 2) * scale);
 		return skill;
 	}
 
 	public static Skill Wind(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 60 + scale;
 		skill.element = Elemental.Wind;
 		skill.name = "Aero " + scale;
@@ -103,12 +103,12 @@ public class ActiveSkills {
 		skill.power = 0.5f + (scale * 0.20f);
 		skill.range = scale;
 		skill.field = ((scale - 1) / 3);
-		skill.level_cost = (scale + 6) + ((scale - 2) * scale);
+//		skill.level_cost = (scale + 6) + ((scale - 2) * scale);
 		return skill;
 	}
 
 	public static Skill Heal(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 100 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Vitae " + scale;
@@ -119,12 +119,12 @@ public class ActiveSkills {
 		skill.power = -0.5f - (0.1f * scale);
 		skill.range = scale;
 		skill.field = 0;
-		skill.level_cost = scale * scale;
+//		skill.level_cost = scale * scale;
 		return skill;
 	}
 
 	public static Skill Aura(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 110 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Aura " + scale;
@@ -135,12 +135,12 @@ public class ActiveSkills {
 		skill.power = -0.25f - (0.15f * scale);
 		skill.range = scale;
 		skill.field = (scale / 3) + 1;
-		skill.level_cost = (scale + 2) * (scale + 3);
+//		skill.level_cost = (scale + 2) * (scale + 3);
 		return skill;
 	}
 
 	public static Skill Cure(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 120 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Cure " + scale;
@@ -151,13 +151,13 @@ public class ActiveSkills {
 		skill.power = 0;
 		skill.range = scale - 1;
 		skill.field = (scale - 1 / 2);
-		skill.level_cost = scale * 3;
+//		skill.level_cost = scale * 3;
 		skill.common_event_id = 1;
 		return skill;
 	}
 
 	public static Skill Knockback_Swing(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 200 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Knockback " + scale;
@@ -169,13 +169,13 @@ public class ActiveSkills {
 		skill.power = 0.7f + (0.1f * scale);
 		skill.range = 1;
 		skill.field = 0;
-		skill.level_cost = scale * 5 - 1;
+//		skill.level_cost = scale * 5 - 1;
 		skill.common_event_id = 2;
 		return skill;
 	}
 
 	public static Skill Twinstrike_Swing(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 210 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Twinstrike " + scale;
@@ -187,13 +187,13 @@ public class ActiveSkills {
 		skill.power = 0.45f + (0.05f * scale);
 		skill.range = 1;
 		skill.field = 0;
-		skill.level_cost = scale * 5 - 1;
+//		skill.level_cost = scale * 5 - 1;
 		skill.common_event_id = 3;
 		return skill;
 	}
 
 	public static Skill criticalstrike_Swing(int scale) {
-		Skill skill = new Skill();
+		ActiveSkill skill = new ActiveSkill();
 		skill.id = 220 + scale;
 		skill.element = Elemental.none;
 		skill.name = "Criticalstrike " + scale;
@@ -205,7 +205,7 @@ public class ActiveSkills {
 		skill.power = 0.45f + (0.05f * scale);
 		skill.range = 1;
 		skill.field = 0;
-		skill.level_cost = scale * 5 - 1;
+//		skill.level_cost = scale * 5 - 1;
 		skill.common_event_id = 4;
 		return skill;
 	}

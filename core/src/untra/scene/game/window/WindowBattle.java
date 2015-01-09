@@ -70,18 +70,19 @@ public class WindowBattle extends SelectionWindow {
 	}
 
 	private String status_string(Actor actor) {
-		String text = "";
-		for (Status s : actor.states) {
-			if (s.id == 0) // Actor is dead
-			{
-				text = "[DOWN]\n";
-				break;
-			} else
-				text = "[" + s.name + "]\n";
-		}
-		if (text == "")
-			text = "";
-		return text;
+//		String text = "";
+//		for (Status s : actor.states) {
+//			if (s.id == 0) // Actor is dead
+//			{
+//				text = "[DOWN]\n";
+//				break;
+//			} else
+//				text = "[" + s.name + "]\n";
+//		}
+//		if (text == "")
+//			text = "";
+//		return text;
+		return actor.state.name();
 	}
 
 	protected void draw_actor_status(Draw_Object s_batch, Actor actor,

@@ -7,33 +7,36 @@ import untra.graphics.Sprite;
 import java.util.ArrayList;
 
 import untra.player.Actor;
+import untra.player.SkillSet;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import untra.database.ActiveSkill;
 import untra.database.Skill;
+import untra.database.Skill_Scope;
 import untra.driver.Base;
 
 public class WindowSkill extends WindowBattle {
 
-	public Skill skill;
+	public ActiveSkill skill;
 	private Actor actor;
-	private ArrayList<Skill> skillset;
+	private SkillSet skillset;
 	private ArrayList<Sprite> skillbitmap;
 
 	public WindowSkill() {
 		super(new Rectangle(0, 0, 0, 96));
-		skillset = new ArrayList<Skill>();
+		skillset = new SkillSet(null);
 		skillbitmap = new ArrayList<Sprite>();
 		Initialize(null);
 	}
-
+	
 	public void Initialize(Actor a) {
 		if (a != null)
 			skillset = a.skills;
 		else
-			skillset = new ArrayList<Skill>();
-		item_max = skillset.size();
+			skillset = new SkillSet(a);
+		item_max = skillset.size(Skill_Scope.active);
 		coordinates.height = (Math.min(item_max + 1, 6) * 32) + BUFFER;
 		coordinates.y = (Base.window_height() - coordinates.height - 128) / 2;
 		coordinates.x = -16;
@@ -49,17 +52,17 @@ public class WindowSkill extends WindowBattle {
 	public void update() {
 		super.update();
 		if (this.active && skillset.size() != 0)
-			skill = skillset.get(index);
+			skill = (ActiveSkill) skillset.get(Skill_Scope.active, index);
 
 	}
 
 	private void refresh() {
 		if (actor == null)
 			return;
-		skillset = new ArrayList<Skill>();
+		skillset = actor.skills;
 		skillbitmap.clear();
 		// int i = 0;
-		for (Skill s : actor.skills) {
+		for (ActiveSkill s : actor.skills.activeskills()) {
 			skillset.add(s);
 			Sprite sprite;
 			try {
@@ -82,7 +85,7 @@ public class WindowSkill extends WindowBattle {
 		Vector2 p;
 		Sprite tempSprite;
 		int i = 0;
-		for (Skill s : skillset) {
+		for (ActiveSkill s : skillset.activeskills()) {
 			p = ocoordinates();
 			text_color = (actor.skill_can_use(s)) ? NORMAL_COLOR
 					: DISABLED_COLOR;

@@ -11,15 +11,15 @@ import java.util.Map;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import untra.database.BattleItem;
+import untra.database.Consumable;
 import untra.database.Item;
 import untra.driver.Base;
 
 public class WindowItem extends WindowBattle {
 
-	public BattleItem item;
-	private ArrayList<BattleItem> itemset;
-	private Map<BattleItem, Sprite> itembitmap;
+	public Consumable item;
+	private ArrayList<Consumable> itemset;
+	private Map<Consumable, Sprite> itembitmap;
 
 	public WindowItem() {
 		super(new Rectangle(0, 0, 0, 96));
@@ -32,8 +32,8 @@ public class WindowItem extends WindowBattle {
 		coordinates.y = (Base.window_height() - coordinates.height - 128) / 2;
 		coordinates.x = -16;
 		coordinates.width = 176;
-		itemset = new ArrayList<BattleItem>();
-		itembitmap = new HashMap<BattleItem, Sprite>() {
+		itemset = new ArrayList<Consumable>();
+		itembitmap = new HashMap<Consumable, Sprite>() {
 		};
 		column_max = 1;
 		this.index = 0;
@@ -52,12 +52,12 @@ public class WindowItem extends WindowBattle {
 		Item previous = new Item();
 		// itemset = Party.Items;
 		for (Item i : Base.party.Items) {
-			if (i instanceof BattleItem) {
-				itemset.add((BattleItem) i);
+			if (i instanceof Consumable) {
+				itemset.add((Consumable) i);
 			}
 		}
 		itembitmap.clear();
-		for (BattleItem i : itemset) {
+		for (Consumable i : itemset) {
 			if (itembitmap.containsKey(i))
 				continue;
 			itembitmap.put(i, new Sprite("Items/" + i.name));

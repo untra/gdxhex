@@ -28,7 +28,7 @@ public class Weapon extends DatabaseObject implements IXml<Weapon>, Idata {
 	public int use_anim_id;
 	public int hit_anim_id;
 	public int durability_max;
-	public boolean two_handed;
+	//public boolean two_handed;
 	
 
 	public Skill_Type damage_type() {
@@ -48,14 +48,16 @@ public class Weapon extends DatabaseObject implements IXml<Weapon>, Idata {
 		case Bows:
 			return Skill_Type.SKL;
 
-		case Axes:
-			return two_handed ? Skill_Type.POW : Skill_Type.SKL;
+		case Maces:
+			return Skill_Type.SKL; 
 			
 		default:
 			return Skill_Type.POW;
 
 		}
 	}
+	
+	
 
 	public Weapon() {
 		id = 0;
@@ -76,6 +78,29 @@ public class Weapon extends DatabaseObject implements IXml<Weapon>, Idata {
 		sanitize();
 	}
 	
+	public boolean two_handed()
+	{
+		switch (this.type) {
+		case Short_Blades:
+			return false;
+		case Staves:
+			return false;
+		case Claws:
+			return false;
+		case Wands:
+			return false;
+		case Guns:
+			return false;
+		case Maces:
+			return false;
+		case Knives:
+			return false;
+		default:
+			return true;
+		}
+	}
+	
+	
 	public Weapon(Data d) {
 		super(d);
 		type = Weapon_Type.values()[d.getInt("type")];
@@ -90,8 +115,8 @@ public class Weapon extends DatabaseObject implements IXml<Weapon>, Idata {
 		line =  d.getBool("line");
 		use_anim_id = d.getInt("use_anim_id");
 		hit_anim_id = d.getInt("hit_anim_id");
-		durability_max = d.getInt("durability_max");
-		two_handed = d.getBool("two_handed");
+		//durability_max = d.getInt("durability_max");
+		//two_handed = d.getBool("two_handed");
 		sanitize();
 	}
 	

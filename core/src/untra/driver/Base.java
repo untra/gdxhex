@@ -43,8 +43,8 @@ public class Base implements ApplicationListener {
 	public static final String small_font_name = "m8.fnt";
 	public static final int Magic_Number = 256;
 	public static final int tile_pixel_width = 56; // minimum map width is 23
-	public static boolean DEBUG = true;
-
+	public static boolean DEBUG = false;
+	public static boolean FRIENDLY_FIRE = true;
 	public static int quarter_tile_pixel_width() {
 		return tile_pixel_width / 4;
 	}
@@ -117,6 +117,9 @@ public class Base implements ApplicationListener {
 	 * are simmarily destroyed in the destructor at the end of the program
 	 */
 	public void create() {
+		Gdx.graphics.setDisplayMode(DEFAULTWINDOWWIDTH,
+				DEFAULTWINDOWHEIGHT,
+                false);
 		Draw_Object.init();
 		Input.init();
 		Window.init();
@@ -132,7 +135,7 @@ public class Base implements ApplicationListener {
 		// party initialization
 		party = new Party();
 		Actor actor = new Actor(Database.classes[9], 8);
-		actor.skills.add(Database.skills[1]);
+		//actor.skills.add(Database.skills[1]);
 		party.Members.add(actor);
 		//
 		RANDOMIZER = new Random();

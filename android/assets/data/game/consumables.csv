@@ -1,0 +1,21 @@
+id,name,description,price,use,HP_recovery_value,SP_recovery_value,HP_recovery_rate,SP_recovery_rate,accuracy,variance,range,field,add_state,sub_state,anim_hit_id,anim_use_id,reaction_event
+0,NULL,error!,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+1,Minor Tonic,Restores 20 HP to the target,30,0,20,0,0,0,1,0,0,0,0,0,0,0,0
+2,Health Tonic,Restores 50 HP to the target,80,0,50,0,0,0,1,0,0,0,0,0,0,0,0
+3,Strong Health Tonic,Restores 100 HP to the target,160,0,100,0,0,0,1,0,0,0,0,0,0,0,0
+4,Ultra Health Tonic,Restores 200 HP to the target,320,0,200,0,0,0,1,0,0,0,0,0,0,0,0
+5,Small Turnip,Restores a small amount of HP. Automatically Consumed at Critical HP,8,0,8,0,0,0,1,0.5,0,0,0,0,0,0,1
+6,Turnip,Restores some HP. Automatically Consumed at Critical HP,12,0,18,0,0,0,1,0.5,0,0,0,0,0,0,1
+7,Big Turnip,Restores HP. Automatically Consumed at Critical HP,16,0,32,0,0,0,1,0.5,0,0,0,0,0,0,1
+8,Mega Turnip,Restores a large amount of HP. Automatically Consumed at Critical HP,20,0,50,0,0,0,1,0.5,0,0,0,0,0,0,1
+9,Antidote,Removes any status condition,60,0,0,0,0,0,1,0,0,0,0,8,0,0,0
+10,Invisibility Potion,Makes the user invisible,72,0,0,0,0,0,1,0,0,0,16,0,0,0,0
+12,Minor Ether,Restores 15 SP to the target,45,0,0,15,0,0,1,0,0,0,0,0,0,0,0
+13,Ether,Restores 35 SP to the target,120,0,0,35,0,0,1,0,0,0,0,0,0,0,0
+14,Strong Ether,Restores 75 SP to the target,240,0,0,75,0,0,1,0,0,0,0,0,0,0,0
+15,Beetroot,Removes minor status conditions. Automatically consumed when character is debuffed,10,0,0,0,0,0,1,0,0,0,0,4,0,0,4
+16,Elixir,Restores 20% of targets HP and SP,130,0,0,0,0.2,0.2,1,0,0,0,0,0,0,0,0
+17,Strong Elixir,Restores 50% of targets HP and SP,270,0,0,0,0.5,0.5,1,0,0,0,0,0,0,0,0
+18,Elderberries,Recovers some SP. Automatically Consumed when attacked,14,0,0,0,0,0.15,1,0.35,0,0,0,0,0,0,2
+19,Rust Knot,Thrown Weapon: Does minor damage,15,0,-16,0,0,0,0.5,0.25,3,0,0,0,0,0,0
+20,Fulminating Phial,Thrown Weapon: Causes poison in a small AOE,90,0,0,0,0,0,0.5,0,3,1,2,0,0,0,0

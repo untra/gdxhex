@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 import untra.driver.IXml;
 
 public enum Skill_Scope implements IXml<Skill_Scope> {
-	none, attack, heal, revive, passive, reactive;
+	none, active, passive, reactive;
 	@Override
 	public void xmlWrite(XmlWriter xml) throws IOException {
 		xml.element("Skill_Scope").text(this.ordinal()).pop();

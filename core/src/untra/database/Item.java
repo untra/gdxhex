@@ -7,12 +7,8 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import untra.driver.IXml;
 
-public class Item implements IXml<Item>, Idata {
-	public int id;
-	public String name;
-	public String description;
+public class Item extends DatabaseObject implements IXml<Item>, Idata {
 	public int price;
-	public Skill_Scope scope;
 	// public Enums.Elements Element;
 	public Item_Use use;
 
@@ -36,8 +32,7 @@ public class Item implements IXml<Item>, Idata {
 		name = "NULL";
 		description = "???";
 		price = 1;
-		scope = Skill_Scope.none;
-		use = Item_Use.never;
+		use = Item_Use.bonus;
 
 		// HP_Recovery_rate = 0.0f;
 		// HP_Recovery_value = 0;
@@ -56,6 +51,15 @@ public class Item implements IXml<Item>, Idata {
 		// minus_states[0] = 0;
 	}
 
+
+	public Item(Data d) {
+		super(d);
+		price = d.getInt("price");
+		use = Item_Use.values()[d.getInt("use")];
+//		prereq = d.getInt("prereq", 0);
+//		level_cost = d.getInt("level_cost");
+	}
+	
 	@Override
 	public void xmlWrite(XmlWriter xml) throws IOException {
 		xml.element("Item").attribute("id", this.id);
@@ -63,7 +67,6 @@ public class Item implements IXml<Item>, Idata {
 		xml.element("description").text(this.description).pop();
 		xml.element("price").text(price).pop();
 		use.xmlWrite(xml);
-		scope.xmlWrite(xml);
 		xml.pop();
 	}
 
@@ -81,7 +84,6 @@ public class Item implements IXml<Item>, Idata {
 		item.name = element.get("name");
 		item.description = element.get("description");
 		item.price = element.getInt("price");
-		item.scope = scope.xmlRead(element);
 		item.use = use.xmlRead(element);
 		return item;
 	}

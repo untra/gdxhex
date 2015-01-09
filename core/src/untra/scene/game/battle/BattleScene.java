@@ -24,8 +24,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import untra.database.ActiveSkill;
 import untra.database.Animation;
-import untra.database.BattleItem;
+import untra.database.Consumable;
 import untra.database.Database;
 import untra.database.IRanged;
 import untra.database.Skill;
@@ -61,8 +62,8 @@ public class BattleScene extends GameScene {
 	/**
 	 * Temporary objects
 	 * */
-	private static Skill skill;
-	private static BattleItem item;
+	private static ActiveSkill skill;
+	private static Consumable item;
 	private static LinkedList<Battler> targets, temp_targets;
 	public static Animation use_anim, hit_anim;
 	private HexDirectional prev_dir;
@@ -180,7 +181,7 @@ public class BattleScene extends GameScene {
 	/**
 	 * The current battler focus of the scene
 	 * */
-	private static Battler Active_Battler() {
+	private static Battler active_battler() {
 		return _active_Battler;
 	}
 
@@ -204,7 +205,7 @@ public class BattleScene extends GameScene {
 	 * */
 	private static void ab_reset() {
 		clear_tilerange_sprites();
-		camera.center_camera_on_battler(Active_Battler());
+		camera.center_camera_on_battler(active_battler());
 		if (_active_Battler == null) {
 			System.out.println("ab_reset: Active Battler not set!");
 			return;
@@ -320,7 +321,7 @@ public class BattleScene extends GameScene {
 			windowset_help.active = false;
 			windowset_tile.active = true;
 		}
-		if (freeze_scrolling && Active_Battler() == null)
+		if (freeze_scrolling && active_battler() == null)
 			freeze_scrolling = false;
 		if (Input.triggerA()) {
 
@@ -343,7 +344,7 @@ public class BattleScene extends GameScene {
 			windowset_help.active = true;
 			windowset_action.Initialize_Basic();
 			windowset_action.active = true;
-			windowset_skill.Initialize(Active_Battler().properties);
+			windowset_skill.Initialize(active_battler().properties);
 			windowset_item.Initialize();
 			// clears all highlighted tiles
 			clear_tilerange_sprites();
@@ -351,13 +352,13 @@ public class BattleScene extends GameScene {
 			return;
 		}
 		// General Processing for the active battler
-		if (Active_Battler() != null) {
+		if (active_battler() != null) {
 			// No thinking if the active battler is moving
-			if (Active_Battler().is_moving()) {
+			if (active_battler().is_moving()) {
 				return;
 			}
 			// If the active battler is dead...
-			if (Active_Battler().is_dead()) {
+			if (active_battler().is_dead()) {
 				// TODO: Natural Removal of States
 				setActive_Battler(null);
 				windowset_action.active = false;
@@ -368,7 +369,7 @@ public class BattleScene extends GameScene {
 			// If the Action Window is active, it should also be visible
 			if (windowset_action.active) {
 				// If the active battler has moved and acted, it's turn ends
-				if (Active_Battler().has_acted && Active_Battler().has_moved) {
+				if (active_battler().has_acted && active_battler().has_moved) {
 					setPHASE(6);
 
 					windowset_action.active = false;
@@ -465,7 +466,7 @@ public class BattleScene extends GameScene {
 			// The player selected a skill for use : battle.
 			if (Input.triggerA() && windowset_skill.active
 					&& (Input.cursorInRectangle(windowset_skill.cursor_rect))) {
-				if (Active_Battler().properties.skills.size() == 0) {
+				if (active_battler().properties.skills.size() == 0) {
 					Audio.SE_Buzzer.play();
 					return;
 				}
@@ -483,12 +484,12 @@ public class BattleScene extends GameScene {
 					switch (windowset_action.index) {
 					case (0): // Move
 					{
-						if (Active_Battler().has_moved) {
+						if (active_battler().has_moved) {
 							Audio.SE_Buzzer.play();
 							return;
 						}
 						Audio.SE_Selection.play();
-						check_area(Active_Battler(), 1, null);
+						check_area(active_battler(), 1, null);
 						windowset_action.active = false;
 						// WindowSet_Action.hide();
 						// set active cursor
@@ -501,7 +502,7 @@ public class BattleScene extends GameScene {
 					}
 					case (1): // Act
 					{
-						if (Active_Battler().has_acted) {
+						if (active_battler().has_acted) {
 							Audio.SE_Buzzer.play();
 							return;
 						}
@@ -515,8 +516,8 @@ public class BattleScene extends GameScene {
 
 						Audio.SE_Selection.play();
 						// If defending, sets defending flag
-						if (!Active_Battler().has_acted)
-							Active_Battler().set_use_defend(true);
+						if (!active_battler().has_acted)
+							active_battler().set_use_defend(true);
 						windowset_action.active = false;
 						setPHASE(6); // END PHASE
 						break;
@@ -526,13 +527,13 @@ public class BattleScene extends GameScene {
 					switch (windowset_action.index) {
 					case (0): // Attack
 					{
-						if (Active_Battler().has_acted) {
+						if (active_battler().has_acted) {
 							Audio.SE_Buzzer.play();
 							return;
 						}
 						windowset_status.active = false;
 						Audio.SE_Selection.play();
-						check_area(Active_Battler(), 2, null);
+						check_area(active_battler(), 2, null);
 						windowset_action.active = false;
 						// WindowSet_Action.hide();
 						cursor_active = true;
@@ -542,7 +543,7 @@ public class BattleScene extends GameScene {
 					case (1): // Item
 					{
 						// If the active battler hasn't already acted
-						if (Active_Battler().has_acted) {
+						if (active_battler().has_acted) {
 							Audio.SE_Buzzer.play();
 							return;
 						}
@@ -553,7 +554,7 @@ public class BattleScene extends GameScene {
 						windowset_item.active = true;
 						windowset_item.index = 0;
 						cursor_active = false;
-						Active_Battler().current_action.kind = BattleAction.Kind.item;
+						active_battler().current_action.kind = BattleAction.Kind.item;
 						// //windowset_help.move_to_bottom();
 						// windowset_help.active = true;
 						break;
@@ -561,7 +562,7 @@ public class BattleScene extends GameScene {
 					case (2): // Special
 					{
 						// If the active battler hasn't already acted
-						if (Active_Battler().has_acted) {
+						if (active_battler().has_acted) {
 							Audio.SE_Buzzer.play();
 							return;
 						}
@@ -574,7 +575,7 @@ public class BattleScene extends GameScene {
 						// WindowSet_Skill.Initialize(Active_Battler().Properties);
 						windowset_skill.index = 0;
 						cursor_active = false;
-						Active_Battler().current_action.kind = BattleAction.Kind.special;
+						active_battler().current_action.kind = BattleAction.Kind.special;
 						// //windowset_help.move_to_bottom();
 						break;
 					}
@@ -605,7 +606,7 @@ public class BattleScene extends GameScene {
 					}
 					case (2): // Wait / Defend
 					{
-						if (!Active_Battler().has_acted)
+						if (!active_battler().has_acted)
 							windowset_help.set_content("Ends this turn.");
 						else
 							windowset_help.set_content("Defend this turn.");
@@ -629,7 +630,7 @@ public class BattleScene extends GameScene {
 					{
 
 						windowset_help.set_content("Use one of "
-								+ Active_Battler().properties.Name
+								+ active_battler().properties.Name
 								+ "'s special moves.");
 						break;
 					}
@@ -646,23 +647,23 @@ public class BattleScene extends GameScene {
 		LinkedList<HexTile> range = new LinkedList<HexTile>();
 		// Phase Initialize
 		if (initialize_phase) {
-			item = (BattleItem) windowset_item.item;
+			item = (Consumable) windowset_item.item;
 			Audio.SE_Selection.play();
-			Active_Battler().current_action = new BattleAction();
-			Active_Battler().current_action.kind = BattleAction.Kind.item;
+			active_battler().current_action = new BattleAction();
+			active_battler().current_action.kind = BattleAction.Kind.item;
 			cursor_active = true;
 			windowset_item.active = false;
 			Selected_Tile = null;
 			initialize_phase = false;
 			if (heal_range.size() == 0 && special_range.size() == 0) {
 				// if healing item
-				if (item.scope == Skill_Scope.heal) {
-					check_area(Active_Battler(), 3, item);
+				if (item.is_healing_item()) {
+					check_area(active_battler(), 3, item);
 					range = heal_range;
 				}
 				// else special item
 				else {
-					check_area(Active_Battler(), 4, item);
+					check_area(active_battler(), 4, item);
 					range = special_range;
 				}
 			}
@@ -704,22 +705,22 @@ public class BattleScene extends GameScene {
 
 		}
 
-		// If the selected item is meant to revive a character
-		if (item.scope == Skill_Scope.revive) {
-			if (windowset_revive.active) {
-				// I forgot what was supposed to go here CONTINUE
-			}
-		}
+//		// If the selected item is meant to revive a character
+//		if (item.scope == Skill_Scope.revive) {
+//			if (windowset_revive.active) {
+//				// I forgot what was supposed to go here CONTINUE
+//			}
+//		}
 
 		if (heal_range.size() == 0 && special_range.size() == 0) {
 			// if healing item
-			if (item.scope == Skill_Scope.heal) {
-				check_area(Active_Battler(), 3, item);
+			if (item.is_healing_item()) {
+				check_area(active_battler(), 3, item);
 				range = heal_range;
 			}
 			// else special item
 			else {
-				check_area(Active_Battler(), 4, item);
+				check_area(active_battler(), 4, item);
 				range = special_range;
 			}
 		} else if (range.size() == 0) {
@@ -729,8 +730,8 @@ public class BattleScene extends GameScene {
 
 		if (Input.triggerA()) {
 			if (Selected_Tile.equals(cursor_index())) {
-				set_meta_variables(Active_Battler().current_action);
-				Active_Battler().turn_to(Selected_Tile);
+				set_meta_variables(active_battler().current_action);
+				active_battler().turn_to(Selected_Tile);
 				targets = get_targets(Selected_Tile, item.Range());
 				windowset_item.refresh();
 				cursor_active = false;
@@ -752,31 +753,31 @@ public class BattleScene extends GameScene {
 		// Initialize
 		if (initialize_phase) {
 			skill = windowset_skill.skill;
-			if (!(Active_Battler().properties.skill_can_use(skill))) {
+			if (!(active_battler().properties.skill_can_use(skill))) {
 				Audio.SE_Buzzer.play();
 				setPHASE(1);
 				return;
 			}
 			Audio.SE_Selection.play();
-			Active_Battler().current_action = new BattleAction();
-			Active_Battler().current_action.kind = BattleAction.Kind.special;
-			Active_Battler().current_action.id = skill.id;
-			if (skill.scope == Skill_Scope.heal)
-				check_area(Active_Battler(), 3, skill);
+			active_battler().current_action = new BattleAction();
+			active_battler().current_action.kind = BattleAction.Kind.special;
+			active_battler().current_action.id = skill.id;
+			if (skill.is_healing_skill())
+				check_area(active_battler(), 3, skill);
 			else
-				check_area(Active_Battler(), 4, skill);
+				check_area(active_battler(), 4, skill);
 			cursor_active = true;
 			windowset_skill.active = false;
 
 			if (heal_range.size() == 0 && special_range.size() == 0) {
 				// if healing skill
-				if (skill.scope == Skill_Scope.heal) {
-					check_area(Active_Battler(), 3, skill);
+				if (skill.is_healing_skill()) {
+					check_area(active_battler(), 3, skill);
 					// range = heal_range;
 				}
 				// else special item
 				else {
-					check_area(Active_Battler(), 4, skill);
+					check_area(active_battler(), 4, skill);
 					// range = special_range;
 				}
 			}
@@ -804,33 +805,33 @@ public class BattleScene extends GameScene {
 		}
 
 		// If the selected skill revives
-		if (skill.scope == Skill_Scope.revive) {
-			if (windowset_revive.active) {
-				windowset_status.setBattler(Dead_Players
-						.get(windowset_revive.index));
-			} else {
-				windowset_status.update();
-			}
-		}
+//		if (skill.scope == Skill_Scope.revive) {
+//			if (windowset_revive.active) {
+//				windowset_status.setBattler(Dead_Players
+//						.get(windowset_revive.index));
+//			} else {
+//				windowset_status.update();
+//			}
+//		}
 
 		if (Input.triggerA()) {
 			// If the player has confirmed he wants to use the selected skill
 			// the selected tile will match the cursor index
 			if (Selected_Tile != null) {
 				if (Selected_Tile.equals(cursor_index())) {
-					set_meta_variables(Active_Battler().current_action);
+					set_meta_variables(active_battler().current_action);
 					// turn to target
-					Active_Battler().turn_to(Selected_Tile);
+					active_battler().turn_to(Selected_Tile);
 					// Action processing
 					// Clear confirmation window
 					// windowset_confirm.active = false;
 					// windowset_confirm.content = "";
-					windowset_action.setBattler(Active_Battler());
+					windowset_action.setBattler(active_battler());
 					// Status Window reset skill, attacker
 					clear_tilerange_sprites();
-					if (Active_Battler().is_dead()) {
-						Active_Battler().has_acted = false;
-						Active_Battler().has_moved = false;
+					if (active_battler().is_dead()) {
+						active_battler().has_acted = false;
+						active_battler().has_moved = false;
 						setActive_Battler(null);
 						cursor_active = false;
 						setPHASE(0);
@@ -857,17 +858,8 @@ public class BattleScene extends GameScene {
 					// Damage preveiw
 					windowset_help.move_to_top();
 					return;
-				} else if (skill.scope == Skill_Scope.revive) // revive
-				{
-					if (Selected_Tile.passabilities && is_occupied()) {
-						// REVIVE STUFF. COMMENTED OUT FOR NOW.
-						// WindowSet_Revive.active = true;
-						// WindowSet_Revive.index = 0;
-						// cursor_active = false;
-						// Audio.SE_Selection.play();
-						// return;
-					}
-				} else {
+				} 
+				else {
 					Audio.SE_Buzzer.play();
 					Selected_Tile = null;
 				}
@@ -911,11 +903,11 @@ public class BattleScene extends GameScene {
 	private void PHASE_4() {
 		LinkedList<HexTile> range;
 		if (initialize_phase) {
-			check_area(Active_Battler(), 2, null);
+			check_area(active_battler(), 2, null);
 			windowset_status.active = true;
 			windowset_status.active = true;
-			Active_Battler().current_action = new BattleAction();
-			Active_Battler().current_action.kind = BattleAction.Kind.attack;
+			active_battler().current_action = new BattleAction();
+			active_battler().current_action.kind = BattleAction.Kind.attack;
 			cursor_active = true;
 			Selected_Tile = null;
 			initialize_phase = false;
@@ -957,11 +949,11 @@ public class BattleScene extends GameScene {
 			Selected_Tile = cursor_index();
 			if (range.contains(Selected_Tile)) {
 				Audio.SE_Selection.play();
-				targets = get_targets(Selected_Tile, Active_Battler().range());
-				targets = get_targets(Selected_Tile, Active_Battler().field());
+				targets = get_targets(Selected_Tile, active_battler().range());
+				targets = get_targets(Selected_Tile, active_battler().field());
 				// If the target list contains himself.
-				if (targets.contains(Active_Battler()))
-					targets.remove(Active_Battler());
+				if (targets.contains(active_battler()))
+					targets.remove(active_battler());
 				if (targets.size() > 0) // if there are targets to aim for
 				{
 					Audio.SE_Selection.play();
@@ -988,11 +980,11 @@ public class BattleScene extends GameScene {
 		// Initialization operations
 		if (initialize_phase) {
 			windowset_status.active = true;
-			check_area(Active_Battler(), 1, null);
+			check_area(active_battler(), 1, null);
 			// pre_x = Active_Battler().X;
 			// pre_y = Active_Battler().Y;
 			hovering = cursor_index();
-			bfspath = map_array.BFS(Active_Battler().Pos(), hovering);
+			bfspath = map_array.BFS(active_battler().Pos(), hovering);
 			bfsdirectional = new LinkedList<HexDirectional>();
 			initialize_phase = false;
 		}
@@ -1009,7 +1001,7 @@ public class BattleScene extends GameScene {
 		}
 
 		if (move_range.size() == 0)
-			check_area(Active_Battler(), 1, null);
+			check_area(active_battler(), 1, null);
 
 		// Tile Selected
 		if (Input.triggerA()) {
@@ -1025,7 +1017,7 @@ public class BattleScene extends GameScene {
 					clear_hextile_flags();
 					move_range.clear();
 					attack_range.clear();
-					Active_Battler().has_moved = true;
+					active_battler().has_moved = true;
 					clear_tilerange_sprites();
 					setPHASE(1);
 					windowset_action.active = true;
@@ -1045,7 +1037,7 @@ public class BattleScene extends GameScene {
 			bfsdirectional.clear();
 			if (move_range.contains(cursor_index())) {
 				// gets the bfspath of the movement cursor
-				bfspath = map_array.BFS(Active_Battler().Pos(), hovering);
+				bfspath = map_array.BFS(active_battler().Pos(), hovering);
 				// creates the bfsdirectinal queue
 				HexTile current, previous;
 				LinkedList<HexDirectional> bfslist;
@@ -1073,7 +1065,7 @@ public class BattleScene extends GameScene {
 		 */
 		// Active_Battler().Move_PriorityBlockingQueue = AI.BFS_Path(n,
 		// Selected_Tile);
-		Active_Battler().set_movement_path(bfspath);
+		active_battler().set_movement_path(bfspath);
 
 	}
 
@@ -1091,9 +1083,9 @@ public class BattleScene extends GameScene {
 	 * */
 	private void PHASE_6() {
 		if (initialize_phase) {
-			prev_dir = Active_Battler().direction();
-			Waiting_sprites.setpos(new Vector2(Active_Battler().real_X(),
-					Active_Battler().real_Y() - Base.tile_pixel_height));
+			prev_dir = active_battler().direction();
+			Waiting_sprites.setpos(new Vector2(active_battler().real_X(),
+					active_battler().real_Y() - Base.tile_pixel_height));
 			initialize_phase = false;
 			cursor_active = false;
 			windowset_action.active = false;
@@ -1102,8 +1094,8 @@ public class BattleScene extends GameScene {
 
 		if (Input.triggerB()) {
 			setPHASE(1);
-			Active_Battler().setDirection(prev_dir);
-			Active_Battler().set_use_defend(false);
+			active_battler().setDirection(prev_dir);
+			active_battler().set_use_defend(false);
 			windowset_action.active = true;
 			return;
 		}
@@ -1124,30 +1116,30 @@ public class BattleScene extends GameScene {
 	 */
 	private void orientActiveBattlerToCursor() {
 
-		HexDirectional direction = HexTable.travel_adjacent(Active_Battler()
+		HexDirectional direction = HexTable.travel_adjacent(active_battler()
 				.Pos(), cursor_index());
 		// Changes the battlers direction according to the cursor
 		if (direction.NW) {
-			Active_Battler().setDirection(HexDirectional.NW());
+			active_battler().setDirection(HexDirectional.NW());
 			Waiting_sprites.X_index = 0;
 
 		} else if (direction.W) {
-			Active_Battler().setDirection(HexDirectional.W());
+			active_battler().setDirection(HexDirectional.W());
 			Waiting_sprites.X_index = 2;
 
 		} else if (direction.SW) {
-			Active_Battler().setDirection(HexDirectional.SW());
+			active_battler().setDirection(HexDirectional.SW());
 			Waiting_sprites.X_index = 4;
 
 		} else if (direction.NE) {
-			Active_Battler().setDirection(HexDirectional.NE());
+			active_battler().setDirection(HexDirectional.NE());
 			Waiting_sprites.X_index = 1;
 
 		} else if (direction.E) {
-			Active_Battler().setDirection(HexDirectional.E());
+			active_battler().setDirection(HexDirectional.E());
 			Waiting_sprites.X_index = 3;
 		} else if (direction.SE) {
-			Active_Battler().setDirection(HexDirectional.SE());
+			active_battler().setDirection(HexDirectional.SE());
 			Waiting_sprites.X_index = 5;
 		}
 
@@ -1161,9 +1153,9 @@ public class BattleScene extends GameScene {
 			// STEP = 1;
 			initialize_phase = false;
 			temp_targets.clear();
-			LinkedList<HexTile> vision = Active_Battler().is_enemy() ? GameScene
+			LinkedList<HexTile> vision = active_battler().is_enemy() ? GameScene
 					.enemy_vision() : GameScene.player_vision();
-			for (Battler B : opponents(Active_Battler().is_enemy())) {
+			for (Battler B : opponents(active_battler().is_enemy())) {
 				if (vision.contains(B.Pos()))
 					temp_targets.add(B);
 			}
@@ -1194,7 +1186,7 @@ public class BattleScene extends GameScene {
 		 * position If she hasn't acted, determine if she should act; If she
 		 * should,
 		 */
-		if (Active_Battler().is_moving() || camera.is_scolling())
+		if (active_battler().is_moving() || camera.is_scolling())
 			return;
 		// vision is the hextiles : view of the enemy battlers
 		// creates the list of opponents the AI controller can see
@@ -1203,17 +1195,17 @@ public class BattleScene extends GameScene {
 		// can go after max.(movement + attack range), (skill_range))
 		int reach = 0;
 		// if the battler has not yet moved, its reach includes its movement.
-		reach += Active_Battler().has_moved ? 0 : Active_Battler().properties
+		reach += active_battler().has_moved ? 0 : active_battler().properties
 				.MOV();
-		reach += Active_Battler().has_acted ? 0 : Active_Battler().range();
-		int r = Active_Battler().has_acted ? reach : Math.max(reach,
-				Active_Battler().max_special_range().Range());
+		reach += active_battler().has_acted ? 0 : active_battler().range();
+		int r = active_battler().has_acted ? reach : Math.max(reach,
+				active_battler().max_special_range());
 		targets.clear();
-		targets = get_targets(Active_Battler().Pos(), r);
-		if (!Active_Battler().has_acted) {
+		targets = get_targets(active_battler().Pos(), r);
+		if (!active_battler().has_acted) {
 			Process_Action();
 			return;
-		} else if (!Active_Battler().has_moved) {
+		} else if (!active_battler().has_moved) {
 			Process_Movement();
 			return;
 		} else {
@@ -1250,16 +1242,16 @@ public class BattleScene extends GameScene {
 			 * if (All_Range[0] != null) {
 			 * Active_Battler().turn_to(All_Range[0]); }
 			 */
-			Active_Battler().target_animation = new AnimationInstance(use_anim);
+			active_battler().target_animation = new AnimationInstance(use_anim);
 			Base.wait = use_anim.framecount;
 			check_projectiles();
 
-			if (Active_Battler().current_action.kind == BattleAction.Kind.special) {
-				item = (BattleItem) Database.items[0]; // sets the item to null
+			if (active_battler().current_action.kind == BattleAction.Kind.special) {
+				item = (Consumable) Database.consumables[0]; // sets the item to null
 				windowset_help.temporary_message(skill.name);
 			}
-			if (Active_Battler().current_action.kind == BattleAction.Kind.item) {
-				skill = Database.skills[0]; // sets the skill to null
+			if (active_battler().current_action.kind == BattleAction.Kind.item) {
+				skill = new ActiveSkill(); // sets the skill to null
 				windowset_help.temporary_message(item.name);
 			}
 			STEP = 2;
@@ -1268,7 +1260,7 @@ public class BattleScene extends GameScene {
 		// Ensures nothing extraordinary is going on before performing damage
 		// calculations
 		case 2: {
-			if (Active_Battler().is_moving())
+			if (active_battler().is_moving())
 				return;
 			// if(Active_Battler() != null && projectile : motion)
 			// return
@@ -1292,9 +1284,9 @@ public class BattleScene extends GameScene {
 			// targets[0]);
 			for (int t = 0; t < targets.size(); t++) {
 				damage = 0;
-				if (Active_Battler().use_critical())
+				if (active_battler().use_critical())
 					targets.get(t).set_hit_critical(true);
-				switch (Active_Battler().current_action.kind) {
+				switch (active_battler().current_action.kind) {
 				case attack: {
 					// Active_Battler().accuracy =
 					// BattleMath.Accuracy(Active_Battler(), t);
@@ -1303,26 +1295,25 @@ public class BattleScene extends GameScene {
 				}
 				case item: {
 					// Active_Battler().accuracy = 1.0f;
-					if (item.scope == Skill_Scope.attack
-							|| item.scope == Skill_Scope.heal) {
+
 						// Active_Battler().damage =
 						// BattleMath.damage(Active_Battler(), item);
-						damage = BattleMath.damage(Active_Battler(), item);
+						damage = BattleMath.damage(active_battler(), item);
 						// targets.get(t).damage = damage;
 						damage = BattleMath.damage_corrected(damage,
 								item.variance, Base.RANDOMIZER);
 						targets.get(t).recover_sp(
 								BattleMath.sp_restore(targets.get(t), item));
-					}
+
 					break;
 				}
 				case special: {
-					Active_Battler().properties.SP -= skill.sp_cost;
-					if (!BattleMath.is_miss(Active_Battler(), targets.get(t),
+					active_battler().properties.SP -= skill.sp_cost;
+					if (!BattleMath.is_miss(active_battler(), targets.get(t),
 							Base.RANDOMIZER)) {
 						damage = BattleMath
-								.damage(Active_Battler(), targets.get(t),
-										Active_Battler().current_action);
+								.damage(active_battler(), targets.get(t),
+										active_battler().current_action);
 						damage = BattleMath.damage_corrected(damage,
 								skill.variance, Base.RANDOMIZER);
 					}
@@ -1330,12 +1321,12 @@ public class BattleScene extends GameScene {
 				}
 				}
 				damage = targets.get(t).deal_damage(damage,
-						Active_Battler().direction());
+						active_battler().direction());
 				// TEMP commented out exp gain
 				// Active_Battler().Gain_EXP(targets.get(t).Properties.LEVEL,
 				// damage, skill);
 			}
-			Active_Battler().set_use_critical(false);
+			active_battler().set_use_critical(false);
 			// targets.Clear();
 			STEP = 4;
 			return;
@@ -1347,7 +1338,7 @@ public class BattleScene extends GameScene {
 				break;
 			}
 			// check for doublestrike, knockback, counter, extra stuff
-			if (Active_Battler().current_action.kind != BattleAction.Kind.item) // item
+			if (active_battler().current_action.kind != BattleAction.Kind.item) // item
 																				// use
 																				// does
 																				// not
@@ -1357,7 +1348,7 @@ public class BattleScene extends GameScene {
 				// check for doublestrike
 				for (int t = 0; t < targets.size(); t++) {
 					// if active battler automatically doublstrikes, set so
-					if (Active_Battler().use_doublestrike())
+					if (active_battler().use_doublestrike())
 						targets.get(t).set_hit_doublestrike(true);
 					// if the target is doublestruck, add them to new target
 					// list
@@ -1366,7 +1357,7 @@ public class BattleScene extends GameScene {
 						targets.get(t).set_hit_doublestrike(false);
 					}
 					// prevents infinite doublestrikes
-					Active_Battler().set_use_doublestrike(false);
+					active_battler().set_use_doublestrike(false);
 				}
 				// if the new target list is empty, proceed
 				// else, attack the targets again
@@ -1379,7 +1370,7 @@ public class BattleScene extends GameScene {
 				// check for knockback
 				for (int t = 0; t < targets.size(); t++) {
 					// if active battler automatically knocks back, set so
-					if (Active_Battler().use_knockback())
+					if (active_battler().use_knockback())
 						targets.get(t).set_hit_knockback(true);
 					// if the target is knocked back, add them to new target
 					// list
@@ -1388,7 +1379,7 @@ public class BattleScene extends GameScene {
 						targets.get(t).set_hit_knockback(false);
 					}
 					// prevents infinite knockback
-					Active_Battler().set_hit_knockback(false);
+					active_battler().set_hit_knockback(false);
 				}
 				LinkedList<Battler> targets_in_range = new LinkedList<Battler>(
 						targets);
@@ -1398,9 +1389,9 @@ public class BattleScene extends GameScene {
 				for (Battler B : targets2) {
 					// if the target can be knocked back, knock them back
 					if (map_array.passable(
-							map_array.D(B.Pos(), Active_Battler().direction()),
+							map_array.D(B.Pos(), active_battler().direction()),
 							targets_in_range))
-						B.knockback(Active_Battler().direction());
+						B.knockback(active_battler().direction());
 				}
 				targets2.clear();
 
@@ -1420,24 +1411,24 @@ public class BattleScene extends GameScene {
 						// the following code is a big exception to the rule for
 						// what should be allowed with Active_Battler()
 						// COUNTER:
-						temp_battler = Active_Battler();
+						temp_battler = active_battler();
 						_active_Battler = targets.get(t);// note that this does
 															// not call the get
 															// accesor of the
 															// Active_Battler()
 						temp_targets = targets;
-						Active_Battler().turn_to(temp_battler.Pos());
-						Active_Battler().current_action.clear();
-						Active_Battler().current_action.kind = BattleAction.Kind.attack;
-						targets = get_targets(Active_Battler().Pos(),
-								Active_Battler().range());
+						active_battler().turn_to(temp_battler.Pos());
+						active_battler().current_action.clear();
+						active_battler().current_action.kind = BattleAction.Kind.attack;
+						targets = get_targets(active_battler().Pos(),
+								active_battler().range());
 						// int damage = 0;
 						// basic_attack(ref damage, active_temp);
 						// active_temp.deal_damage(ref damage,
 						// Active_Battler().direction);
-						Active_Battler().set_use_counter(false);
-						use_anim = Active_Battler().use_anim();
-						hit_anim = Active_Battler().hit_anim();
+						active_battler().set_use_counter(false);
+						use_anim = active_battler().use_anim();
+						hit_anim = active_battler().hit_anim();
 						STEP = 1;
 						return;
 					}
@@ -1448,22 +1439,22 @@ public class BattleScene extends GameScene {
 		// control
 		case 5: {
 			// TODO: check for common event occurance
-			if (Active_Battler().is_dead()) {
-				Active_Battler().has_moved = false;
-				Active_Battler().has_acted = false;
+			if (active_battler().is_dead()) {
+				active_battler().has_moved = false;
+				active_battler().has_acted = false;
 				setActive_Battler(null);
 				cursor_active = false;
 				setPHASE(0);
 				freeze_scrolling = false;
 				setActive_Battler(next_up());
 			}
-			if (Active_Battler().is_enemy()) {
+			if (active_battler().is_enemy()) {
 				setPHASE(7);
-			} else if (Active_Battler().has_acted && Active_Battler().has_moved) {
+			} else if (active_battler().has_acted && active_battler().has_moved) {
 				setPHASE(6);
 			} else {
 				windowset_action.active = true;
-				windowset_action.setBattler(Active_Battler());
+				windowset_action.setBattler(active_battler());
 				setPHASE(1);
 			}
 			STEP = 0;
@@ -1476,12 +1467,12 @@ public class BattleScene extends GameScene {
 	 * Sets all applicable variables to set attack : motion for player
 	 * */
 	private void Confirm_Attack() {
-		Active_Battler().current_action.kind = BattleAction.Kind.attack;
-		set_meta_variables(Active_Battler().current_action);
+		active_battler().current_action.kind = BattleAction.Kind.attack;
+		set_meta_variables(active_battler().current_action);
 		// windowset_confirm.active = false;
 		// WindowSet_Status.attacker = null;
 		// WindowSet_Status.skill = null;
-		windowset_action.setBattler(Active_Battler());
+		windowset_action.setBattler(active_battler());
 		windowset_action.active = true;
 		clear_tilerange_sprites();
 	}
@@ -1584,19 +1575,19 @@ public class BattleScene extends GameScene {
 	 * */
 	private int basic_attack(int damage, Battler target) {
 		// If the attack doesn't miss
-		if (!BattleMath.is_miss(Active_Battler(), target, Base.RANDOMIZER)) {
+		if (!BattleMath.is_miss(active_battler(), target, Base.RANDOMIZER)) {
 			// determine necesarry flags and apply damage
-			if (BattleMath.is_critical(Active_Battler(), target,
+			if (BattleMath.is_critical(active_battler(), target,
 					Base.RANDOMIZER))
 				target.set_hit_critical(true);
-			if (BattleMath.is_doublestrike(Active_Battler(), target,
+			if (BattleMath.is_doublestrike(active_battler(), target,
 					Base.RANDOMIZER))
 				target.set_hit_doublestrike(true);
-			if (BattleMath.is_knockback(Active_Battler(), target,
+			if (BattleMath.is_knockback(active_battler(), target,
 					Base.RANDOMIZER))
 				target.set_hit_knockback(true);
-			damage = BattleMath.damage(Active_Battler(), target,
-					Active_Battler().current_action);
+			damage = BattleMath.damage(active_battler(), target,
+					active_battler().current_action);
 			damage = BattleMath
 					.damage_corrected(damage, 0.15f, Base.RANDOMIZER);
 		}
@@ -1614,10 +1605,10 @@ public class BattleScene extends GameScene {
 		// unfinished! CONTINUE
 		HexTile t = Selected_Tile;
 		Battler b = is_occupied() ? occupied_by(t.X, t.Y) : null;
-		switch (Active_Battler().current_action.kind) {
+		switch (active_battler().current_action.kind) {
 		case attack: {
-			if (Active_Battler().is_enemy()) {
-				int x = Active_Battler().range();
+			if (active_battler().is_enemy()) {
+				int x = active_battler().range();
 			}
 			break;
 		}
@@ -1630,47 +1621,47 @@ public class BattleScene extends GameScene {
 	 * */
 	public static void set_meta_variables(BattleAction act) {
 		Audio.SE_Selection.play();
-		skill = Database.skills[0];
-		item = (BattleItem) Database.items[0];
-		Active_Battler().turn_to(Selected_Tile);
+		skill = new ActiveSkill();
+		item = new Consumable();
+		active_battler().turn_to(Selected_Tile);
 		if (act.kind == BattleAction.Kind.special) {
 			if (skill.id == 0)
-				skill = Database.skills[(int) act.id];
-			Active_Battler().properties.SP -= skill.sp_cost;
+				skill = Database.activeskills[(int) act.id];
+			active_battler().properties.SP -= skill.sp_cost;
 			use_anim = Database.animations[skill.anim_use_id];
 			hit_anim = Database.animations[skill.anim_hit_id];
 		}
 		if (act.kind == BattleAction.Kind.item) {
 
 			if (item.id == 0)
-				item = (BattleItem) Database.items[(int) act.id];
+				item = (Consumable) Database.consumables[(int) act.id];
 			Base.party.Items.remove(item);
 			use_anim = Database.animations[item.anim_use_id];
 			hit_anim = Database.animations[item.anim_hit_id];
 		}
 		if (act.kind == BattleAction.Kind.attack) {
-			use_anim = Active_Battler().use_anim();
-			hit_anim = Active_Battler().hit_anim();
+			use_anim = active_battler().use_anim();
+			hit_anim = active_battler().hit_anim();
 		}
-		Active_Battler().has_acted = true;
+		active_battler().has_acted = true;
 		// sort_battlers();
 		setPHASE(9);
 	}
 
 	public static void set_wait_variables() {
 		// hide waiting_sprites
-		if (!Active_Battler().use_defend())
-			Active_Battler().current_action = new BattleAction(
+		if (!active_battler().use_defend())
+			active_battler().current_action = new BattleAction(
 					BattleAction.Kind.defend);
 		else
-			Active_Battler().current_action.clear();
-		Active_Battler().has_acted = false;
-		Active_Battler().has_moved = false;
+			active_battler().current_action.clear();
+		active_battler().has_acted = false;
+		active_battler().has_moved = false;
 		// Check for certain event triggers (end of turn things such as doom
 		// counter, etc.)
 		// Process slip damage
-		Active_Battler().apply_slip_damage();
-		Active_Battler().natural_state_removal();
+		active_battler().apply_slip_damage();
+		active_battler().natural_state_removal();
 		setActive_Battler(null);
 		cursor_active = false;
 		setPHASE(0);
@@ -1687,8 +1678,8 @@ public class BattleScene extends GameScene {
 		Rectangle P;
 		int z_height;
 		HexDirectional B, F;
-		F = HexTable.travel_adjacent(Active_Battler().Pos(), cursor_index());
-		z_height = Active_Battler().Pos().z_height();
+		F = HexTable.travel_adjacent(active_battler().Pos(), cursor_index());
+		z_height = active_battler().Pos().z_height();
 		for (int i = 1; i < bfsdirectional.size(); i++) {
 
 			drawtile = bfspath.get(i);
@@ -1774,8 +1765,8 @@ public class BattleScene extends GameScene {
 	 * Draws the wait cursor
 	 */
 	private void Draw_Wait_Cursor(Draw_Object s_batch) {
-		int x = Active_Battler().real_X() - camera.X();
-		int y = Active_Battler().real_Y() - (Base.tile_pixel_height / 4)
+		int x = active_battler().real_X() - camera.X();
+		int y = active_battler().real_Y() - (Base.tile_pixel_height / 4)
 				- camera.Y();
 		Waiting_sprites.setpos(new Vector2(x, y));
 		Waiting_sprites.draw(s_batch);
@@ -1815,7 +1806,7 @@ public class BattleScene extends GameScene {
 	 */
 	public boolean opponent_in_sight() {
 		for (Battler B : targets) {
-			if (opponents(Active_Battler().is_enemy()).contains(B))
+			if (opponents(active_battler().is_enemy()).contains(B))
 				return true;
 		}
 		return false;
@@ -1851,7 +1842,7 @@ public class BattleScene extends GameScene {
 	public void Process_Movement() {
 		// checks the moveable range
 		// this is mostly to make the move range viewable to the player
-		check_area(Active_Battler(), 1, null);
+		check_area(active_battler(), 1, null);
 		// Waits a few frames
 		Base.wait = MathUtils.random(12, 24);
 		// TODO choose selected tile
@@ -1861,11 +1852,11 @@ public class BattleScene extends GameScene {
 			// distance away than the battlers mov, it'll wander instead;
 			int m = 255;
 			Battler prey = closest_target(m);
-			if (m > 4 * Active_Battler().properties.MOV())
+			if (m > 4 * active_battler().properties.MOV())
 				Selected_Tile = best_wander_pos();
 			// If the AI is within 1.5 x range of the enemy, but has already
 			// acted, she should flee
-			else if (m > 3 * Active_Battler().properties.MOV() / 2)
+			else if (m > 3 * active_battler().properties.MOV() / 2)
 				Selected_Tile = best_flee_pos();
 			// otherwise chase the opponent!
 			else
@@ -1874,9 +1865,9 @@ public class BattleScene extends GameScene {
 			// the selected tile is random - the enemy is wandering
 			Selected_Tile = best_wander_pos();
 		}
-		bfspath = map_array.BFS(Active_Battler().Pos(), Selected_Tile);
+		bfspath = map_array.BFS(active_battler().Pos(), Selected_Tile);
 		Move_Battler();
-		Active_Battler().has_moved = true;
+		active_battler().has_moved = true;
 	}
 
 	/**
@@ -1890,7 +1881,7 @@ public class BattleScene extends GameScene {
 		Battler closest = targets.get(0);
 		int d;
 		for (Battler B : targets) {
-			d = HexTable.distance(Active_Battler().Pos(), B.Pos());
+			d = HexTable.distance(active_battler().Pos(), B.Pos());
 			if (d < min) {
 				min = d;
 				closest = B;
@@ -1913,7 +1904,7 @@ public class BattleScene extends GameScene {
 	 * Process turn end
 	 */
 	public void Process_End() {
-		Active_Battler().setDirection(face_direction());
+		active_battler().setDirection(face_direction());
 		set_wait_variables();
 		setActive_Battler(next_up());
 	}
@@ -1929,25 +1920,25 @@ public class BattleScene extends GameScene {
 		LinkedList<BattleAction> options = attack_options(targets);
 		// If there are no good options, skips action
 		if (options.size() == 0) {
-			Active_Battler().has_acted = true;
+			active_battler().has_acted = true;
 			return;
 		}
 		// else pick the best action
 		BattleAction action = chosen_BattleAction(options);
-		check_area(Active_Battler(), 2, null);
+		check_area(active_battler(), 2, null);
 		// check_area(Active_Battler, 4,
 		// Active_Battler().max_special_range());//add skill range
 		if (action.kind == BattleAction.Kind.attack
 				&& !attack_range.contains(action.target_tile)) {
 			clear_tilerange_sprites();
-			if (!Active_Battler().has_moved) {
+			if (!active_battler().has_moved) {
 				Selected_Tile = best_attack_pos(action);
-				bfspath = map_array.BFS(Active_Battler().Pos(), Selected_Tile);
+				bfspath = map_array.BFS(active_battler().Pos(), Selected_Tile);
 				Move_Battler();
-				Active_Battler().has_moved = true;
+				active_battler().has_moved = true;
 			}
 		}
-		Active_Battler().current_action = action;
+		active_battler().current_action = action;
 		set_meta_variables(action);
 		return;
 	}
@@ -1960,9 +1951,9 @@ public class BattleScene extends GameScene {
 	 */
 	public HexTile best_attack_pos(BattleAction action) {
 		HexTile H = action.target_tile;
-		for (int i = Active_Battler().range(); i > 0; i--) {
+		for (int i = active_battler().range(); i > 0; i--) {
 			H = map_array.D(H,
-					HexTable.travel_adjacent(H, Active_Battler().Pos()));
+					HexTable.travel_adjacent(H, active_battler().Pos()));
 		}
 		return H;
 	}
@@ -1973,7 +1964,7 @@ public class BattleScene extends GameScene {
 	// / <param name="action"></param>
 	// / <returns></returns>
 	public HexTile best_chase_pos(HexTile tile) {
-		HexTile H = Active_Battler().Pos();// H is the tile to chase
+		HexTile H = active_battler().Pos();// H is the tile to chase
 		while (!move_range.contains(H)) {
 			H = pathfind_to(H, tile);
 		}
@@ -2028,18 +2019,18 @@ public class BattleScene extends GameScene {
 	 * @return
 	 */
 	private HexDirectional face_direction() {
-		HexDirectional d = Active_Battler().direction();
+		HexDirectional d = active_battler().direction();
 		// Battler closest;
-		int min = Active_Battler().properties.getVSN();
+		int min = active_battler().properties.getVSN();
 		int n;
 		for (Battler b : targets) {
-			n = HexTable.distance(b.Pos(), Active_Battler().Pos());
+			n = HexTable.distance(b.Pos(), active_battler().Pos());
 			if (n < min) {
 				min = n;
-				d = HexTable.travel_adjacent(Active_Battler().Pos(), b.Pos());
+				d = HexTable.travel_adjacent(active_battler().Pos(), b.Pos());
 			}
 		}
-		return (d.equals(HexDirectional.None())) ? Active_Battler().direction()
+		return (d.equals(HexDirectional.None())) ? active_battler().direction()
 				: d;
 	}
 
@@ -2057,13 +2048,10 @@ public class BattleScene extends GameScene {
 		// Battler basic_target;
 		// Skill special;
 		// Dictionary<Skill, Integer> skills = new Dictionary<Skill,int>();
-		Active_Battler().current_action.kind = BattleAction.Kind.attack;
-		for (Skill S : Active_Battler().properties.skills) {
-			// skip the skill if it revives or does no damage
-			if (S.scope == Skill_Scope.revive || S.scope == Skill_Scope.none)
-				continue;
+		active_battler().current_action.kind = BattleAction.Kind.attack;
+		for (ActiveSkill S : active_battler().properties.skills.activeskills()) {
 			// if the skill will do damage
-			if (Active_Battler().properties.skill_can_use(S)) {
+			if (active_battler().properties.skill_can_use(S)) {
 				// if the skill is a field skill, and can hit multiple
 				// targets
 				if (S.Field() > 0) {
@@ -2075,10 +2063,10 @@ public class BattleScene extends GameScene {
 					break;
 				}
 				// If it is a healing skill
-				if (S.scope == Skill_Scope.heal) {
-					check_area(Active_Battler(), 3, S);
+				if (S.is_healing_skill()) {
+					check_area(active_battler(), 3, S);
 					// for ally of the AB
-					for (Battler B : opponents(!Active_Battler().is_enemy())) {
+					for (Battler B : opponents(!active_battler().is_enemy())) {
 						// If the healing skil will reach them
 						if (heal_range.contains(B.Pos())) {
 							BattleAction action = new BattleAction(
@@ -2094,7 +2082,7 @@ public class BattleScene extends GameScene {
 				// cycle through every target
 				for (Battler B : targets) {
 					// if the skill will actually reach
-					if (map_array.Range(Active_Battler().Pos(), S.Range())
+					if (map_array.Range(active_battler().Pos(), S.Range())
 							.contains(B.Pos())) {
 						BattleAction action = new BattleAction(
 								BattleAction.Kind.special);
@@ -2122,24 +2110,24 @@ public class BattleScene extends GameScene {
 	 */
 	public LinkedList<BattleAction> attack_scores(LinkedList<Battler> targets) {
 		// Scores Attacks
-		int r = Active_Battler().range();
-		r += Active_Battler().has_moved ? 0 : Active_Battler().properties.MOV();
+		int r = active_battler().range();
+		r += active_battler().has_moved ? 0 : active_battler().properties.MOV();
 		// LinkedList<HexTile> range =
 		// map_array.Passable_Range(Active_Battler().Pos, r, new
 		// LinkedList<Battler>());
-		LinkedList<HexTile> range = map_array.Range(Active_Battler().Pos(), r);
+		LinkedList<HexTile> range = map_array.Range(active_battler().Pos(), r);
 		LinkedList<BattleAction> actions = new LinkedList<BattleAction>();
 		int basic = 0;
 		for (Battler B : targets) {
 			// If the target is an ally, the AI will not attack them
-			if (!opponents(Active_Battler().is_enemy()).contains(B))
+			if (!opponents(active_battler().is_enemy()).contains(B))
 				continue;
 			if (range.contains(B.Pos())) {
-				basic = BattleMath.damage(Active_Battler(), B,
-						Active_Battler().current_action);
+				basic = BattleMath.damage(active_battler(), B,
+						active_battler().current_action);
 				// HexDirectional dir =
 				// HexTable.travel_adjacent(Active_Battler().Pos, B.Pos);
-				basic = (HexTable.travel_adjacent(Active_Battler().Pos(),
+				basic = (HexTable.travel_adjacent(active_battler().Pos(),
 						B.Pos()) == B.direction()) ? (int) (basic * 1.7f)
 						: basic;
 				BattleAction action = new BattleAction(BattleAction.Kind.attack);
@@ -2151,15 +2139,15 @@ public class BattleScene extends GameScene {
 		return actions;
 	}
 
-	// / <summary>
-	// / Field skills do different things depending on where they are cast.
+	/**
+	 * Field skills do different things depending on where they are cast.
 	// This cycles through all possible positions a field skill could be
 	// cast
-	// / and returns a list of all possible moves, and the scores
-	// / </summary>
-	// / <param name="skill"></param>
-	// / <returns></returns>
-	private LinkedList<BattleAction> field_skill_value(Skill skill,
+	 * @param skill
+	 * @param targets
+	 * @return
+	 */
+	private LinkedList<BattleAction> field_skill_value(ActiveSkill skill,
 			LinkedList<Battler> targets) {
 		LinkedList<BattleAction> actions = new LinkedList<BattleAction>();
 		LinkedList<HexTile> range = new LinkedList<HexTile>();
@@ -2167,7 +2155,7 @@ public class BattleScene extends GameScene {
 		BattleAction action = new BattleAction(BattleAction.Kind.special);
 		action.id = skill.id;
 		for (HexTile H : (map_array
-				.Range(Active_Battler().Pos(), skill.Range()))) {
+				.Range(active_battler().Pos(), skill.Range()))) {
 			range = map_array.Range(H, skill.Field());
 			for (Battler battler : targets) {
 				if (range.contains(battler.Pos()))
@@ -2220,9 +2208,9 @@ public class BattleScene extends GameScene {
 	// / <returns></returns>
 	private int skill_score(BattleAction act, Battler target, int skill_cost) {
 		int basic = 0, value = 0;
-		basic = (int) (BattleMath.damage(Active_Battler(), target,
-				Active_Battler().current_action) * BattleMath.Accuracy(
-				Active_Battler(), target));
+		basic = (int) (BattleMath.damage(active_battler(), target,
+				active_battler().current_action) * BattleMath.Accuracy(
+				active_battler(), target));
 		basic -= skill_cost / 5;
 		value += basic > target.properties.HP ? (int) (basic * 1.2) : basic;
 		return value;
@@ -2242,8 +2230,8 @@ public class BattleScene extends GameScene {
 	 */
 	private int heal_score(BattleAction act, Battler target, int skill_cost) {
 		int basic;
-		basic = (int) (BattleMath.damage(Active_Battler(), target,
-				Active_Battler().current_action) * -1.0f);
+		basic = (int) (BattleMath.damage(active_battler(), target,
+				active_battler().current_action) * -1.0f);
 		basic = (int) (basic * (3 - 3 * target.properties.HP_rate()));
 		basic -= skill_cost / 5;
 		return basic;
@@ -2258,7 +2246,7 @@ public class BattleScene extends GameScene {
 		int max, d;
 		HexTile chosen = null;
 		if (move_range.size() > 0)
-			return Active_Battler().Pos();
+			return active_battler().Pos();
 		LinkedList<HexTile> scores = new LinkedList<HexTile>();
 		for (HexTile H : move_range) {
 			max = 0;
@@ -2320,7 +2308,7 @@ public class BattleScene extends GameScene {
 		for (Battler B : All_Battlers()) {
 			for (HexTile H : AOE) {
 				if (B.Pos() == H) {
-					if (B != Active_Battler())
+					if (B != active_battler())
 						targets.add(B);
 				}
 			}

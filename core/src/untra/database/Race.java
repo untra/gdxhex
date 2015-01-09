@@ -9,7 +9,17 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 public enum Race {
 	Human, Emberborn, Ratmen, Fey, Canid, Avis, Machina, Undead, Fauna, Beast, Aquatic, Ignis;
-
+	private static final int[] DEFAULT_GAINS = {1,11,22,33,47};
+	public int[] gains()
+	{
+		switch (this) {
+		case Human:
+			return DEFAULT_GAINS;
+		default:
+			return DEFAULT_GAINS;
+		}
+	}
+	
 	public void xmlWrite(XmlWriter xml) throws IOException {
 		xml.element("Race").text(this.ordinal()).pop();
 

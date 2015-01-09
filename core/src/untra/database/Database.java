@@ -19,8 +19,10 @@ public class Database {
 
 	public static Animation[] animations = new Animation[256];
 	public static Klass[] classes = new Klass[256];
-	public static Item[] items = new Item[256];
-	public static Skill[] skills = new Skill[256];
+	public static Consumable[] consumables = new Consumable[256];
+	//public static Item[] items = new Item[256];
+	//public static Skill[] skills = new Skill[256];
+	public static PassiveSkill[] passiveskills = new PassiveSkill[64];
 	public static Status[] states = new Status[64];
 	public static Tile_Object[] tile_objects = new Tile_Object[1024];
 	public static Weapon[] weapons = new Weapon[128];
@@ -93,45 +95,51 @@ public class Database {
 			ex.printStackTrace();
 		}
 		try {
-			element = reader
-					.parse(Gdx.files.internal(ROOT + "battleitems.xml"));
-			// items
-			ArrayList<Item> set = new ArrayList<Item>();
-			BattleItem type = new BattleItem();
-			for (int x = 0; x < element.getChildCount(); x++) {
-				e = element.getChild(x);
-				set.add(type.xmlRead(e));
+			ArrayList<Data> set = Data.load(ROOT + "consumables.csv");
+			int size = set.size();
+			consumables = new Consumable[size];
+			for(int i = 0 ; i < size ; i++)
+			{
+				consumables[i] = new Consumable(set.get(i));
 			}
-			items = set.toArray(items);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		try {
-			element = reader.parse(Gdx.files.internal(ROOT + "skills.xml"));
-			// skills
-			ArrayList<Skill> set = new ArrayList<Skill>();
-			Skill type = new Skill();
-			for (int x = 0; x < element.getChildCount(); x++) {
-				e = element.getChild(x);
-				set.add(type.xmlRead(e));
+//			element = reader.parse(Gdx.files.internal(ROOT + "skills.xml"));
+//			// skills
+//			ArrayList<Skill> set = new ArrayList<Skill>();
+//			Skill type = new Skill();
+//			for (int x = 0; x < element.getChildCount(); x++) {
+//				e = element.getChild(x);
+//				set.add(type.xmlRead(e));
+//			}
+//			skills = set.toArray(skills);
+			ArrayList<Data> set = Data.load(ROOT + "passive_skills.csv");
+			int size = set.size();
+			passiveskills = new PassiveSkill[size];
+			for(int i = 0 ; i < size ; i++)
+			{
+				passiveskills[i] = new PassiveSkill(set.get(i));
 			}
-			skills = set.toArray(skills);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			ex.printStackTrace();		}
+		finally{
+			
 		}
-		try {
-			element = reader.parse(Gdx.files.internal(ROOT + "states.xml"));
-			// states
-			ArrayList<Status> set = new ArrayList<Status>();
-			Status type = new Status();
-			for (int x = 0; x < element.getChildCount(); x++) {
-				e = element.getChild(x);
-				set.add(type.xmlRead(e));
-			}
-			states = set.toArray(states);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+//		try {
+//			element = reader.parse(Gdx.files.internal(ROOT + "states.xml"));
+//			// states
+//			ArrayList<Status> set = new ArrayList<Status>();
+//			Status type = new Status();
+//			for (int x = 0; x < element.getChildCount(); x++) {
+//				e = element.getChild(x);
+//				set.add(type.xmlRead(e));
+//			}
+//			states = set.toArray(states);
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
 		try {
 			element = reader.parse(Gdx.files
 					.internal(ROOT + "tile_objects.xml"));
@@ -170,15 +178,22 @@ public class Database {
 			ex.printStackTrace();
 		}
 		try {
-			element = reader.parse(Gdx.files.internal(ROOT + "armors.xml"));
-			// armors
-			ArrayList<Armor> set = new ArrayList<Armor>();
-			Armor type = new Armor();
-			for (int x = 0; x < element.getChildCount(); x++) {
-				e = element.getChild(x);
-				set.add(type.xmlRead(e));
+//			element = reader.parse(Gdx.files.internal(ROOT + "armors.xml"));
+//			// armors
+//			ArrayList<Armor> set = new ArrayList<Armor>();
+//			Armor type = new Armor();
+//			for (int x = 0; x < element.getChildCount(); x++) {
+//				e = element.getChild(x);
+//				set.add(type.xmlRead(e));
+//			}
+//			armors = set.toArray(armors);
+			ArrayList<Data> set = Data.load(ROOT + "armor.csv");
+			int size = set.size();
+			armors = new Armor[size];
+			for(int i = 0 ; i < size ; i++)
+			{
+				armors[i] = new Armor(set.get(i));
 			}
-			armors = set.toArray(armors);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 import untra.driver.IXml;
 
 public enum Item_Use implements IXml<Item_Use> {
-	always, battle_only, menu_only, never;
+	consumable, armor, weapon, bonus;
 
 	@Override
 	public void xmlWrite(XmlWriter xml) throws IOException {

@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
+import untra.database.ActiveSkill;
 import untra.database.Animation;
 import untra.database.Database;
 import untra.database.Skill;
@@ -96,13 +97,14 @@ public class Battler implements IXml<Battler> {
 	 * returns the threshhold for the battlers next turn
 	 */
 	private int turn_threshhold() {
-		return (int) (600 - properties.getSPD());
+		//return (int) (600 - properties.getSPD());
+		return 64000;
 	}
 
 	/**
 	 * Increases the battlers tentative exp. Levels are gained after battle
 	 */
-	public void Gain_EXP(int target_level, int damage, Skill skill) {
+	public void Gain_EXP(int target_level, int damage, ActiveSkill skill) {
 		int d = damage;
 		float f = (target_level / this.properties.LEVEL);
 		if (this.current_action.kind == BattleAction.Kind.attack)
@@ -119,12 +121,12 @@ public class Battler implements IXml<Battler> {
 	 * Returns the maximum range of the battlers special attacks
 	 */
 
-	public Skill max_special_range() {
+	public int max_special_range() {
 		int b = 0;
-		for (Skill S : properties.skills) {
+		for (ActiveSkill S : properties.skills.activeskills()) {
 			b = Math.max(b, S.Range());
 		}
-		return Skill.range_skill(b);
+		return b;
 	}
 
 	public boolean is_enemy() {

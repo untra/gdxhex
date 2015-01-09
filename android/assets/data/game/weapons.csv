@@ -1,4 +1,4 @@
-id,name,description,Wtype,ATK,POW,SKL,MND,MOV,VSN,SPD,range,line,use_anim_id,hit_anim_id
+id,name,description,type,ATK,POW,SKL,MND,MOV,VSN,SPD,range,line,use_anim_id,hit_anim_id
 0,Staff,TODO set this,0,9,0,0,0,0,0,0,1,FALSE,0,0
 1,Bow,TODO set this,1,18,0,3,0,0,0,0,5,FALSE,0,0
 2,Broadsword,TODO set this,2,22,0,0,0,0,0,0,1,FALSE,0,0

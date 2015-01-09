@@ -2,7 +2,7 @@ package untra.scene.game.battle;
 
 import java.util.Random;
 
-import untra.database.BattleItem;
+import untra.database.Consumable;
 import untra.database.Database;
 import untra.database.Skill_Type;
 
@@ -176,8 +176,8 @@ public class BattleMath {
 	 * @param item
 	 * @return
 	 */
-	public static int damage(Battler T, BattleItem item) {
-		return ((item.HP_Recovery_value) + (int) (item.HP_Recovery_rate * (T.properties
+	public static int damage(Battler T, Consumable item) {
+		return ((item.HP_Recovery_value) + (int) (item.HP_recovery_rate * (T.properties
 				.MAX_HP()))) * -1;
 	}
 
@@ -188,8 +188,8 @@ public class BattleMath {
 	 * @param item
 	 * @return
 	 */
-	public static int sp_restore(Battler T, BattleItem item) {
-		return (item.SP_Recovery_value + (int) (T.properties.MAX_SP() * item.SP_Recovery_rate));
+	public static int sp_restore(Battler T, Consumable item) {
+		return (item.SP_recovery_value + (int) (T.properties.MAX_SP() * item.SP_recovery_rate));
 	}
 
 	/**

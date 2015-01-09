@@ -1,12 +1,14 @@
 package untra.player;
 
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
+import untra.database.ActiveSkill;
 import untra.database.Animation;
 import untra.database.Armor;
 import untra.database.Armor_Type;
@@ -15,6 +17,7 @@ import untra.database.Elemental;
 import untra.database.Klass;
 import untra.database.Race;
 import untra.database.Skill;
+import untra.database.Skill_Scope;
 import untra.database.Skill_Type;
 import untra.database.Status;
 import untra.database.Weapon;
@@ -25,6 +28,7 @@ public class Actor implements IXml<Actor> {
 	public boolean playable_character;
 	public String Name;
 	public Klass cclass;
+	//public Race race;
 	// public boolean is_male;
 	public int LEVEL;
 	public int EXP;
@@ -32,7 +36,8 @@ public class Actor implements IXml<Actor> {
 	// public boolean is_monster;
 
 	// public Item[] items;
-	public ArrayList<Skill> skills;
+	//public ArrayList<Skill> skills;
+	public SkillSet skills;
 
 	public Weapon weapon = new Weapon();
 	public Armor armor = new Armor();
@@ -41,7 +46,8 @@ public class Actor implements IXml<Actor> {
 	 * 0 - ATK, 1 - DEF, 2 - SPD, 3 - ACC, 4 - EVA
 	 */
 	public int[] stat_modifiers = new int[5];
-	public ArrayList<Status> states;
+	//public ArrayList<Status> states;
+	public Status state = Status._;
 	public int HP;
 	public int SP;
 	// private Skill_Type _damage_factor;
@@ -70,7 +76,7 @@ public class Actor implements IXml<Actor> {
 		return n * (n + 10);
 	}
 
-	private Race _race = Race.Human;
+	//private Race _race = Race.Human;
 
 	// TODO finish
 	public Race getRace() {
@@ -103,11 +109,7 @@ public class Actor implements IXml<Actor> {
 	 * @return
 	 */
 	public boolean status_cannot_move() {
-		for (Status s : states) {
-			if (s.disable_move)
-				return true;
-		}
-		return false;
+		return state.disable_move();
 	}
 
 	/**
@@ -116,11 +118,7 @@ public class Actor implements IXml<Actor> {
 	 * @return
 	 */
 	public boolean status_cannot_special() {
-		for (Status s : states) {
-			if (s.disable_skills)
-				return true;
-		}
-		return false;
+		return state.disable_magic();
 	}
 
 	/**
@@ -129,11 +127,7 @@ public class Actor implements IXml<Actor> {
 	 * @return
 	 */
 	public boolean status_cannot_act() {
-		for (Status s : states) {
-			if (s.cannot_act)
-				return true;
-		}
-		return false;
+		return state.cannot_act();
 	}
 
 	/**
@@ -142,11 +136,7 @@ public class Actor implements IXml<Actor> {
 	 * @return
 	 */
 	public boolean status_cannot_cast() {
-		for (Status s : states) {
-			if (s.disable_magic)
-				return true;
-		}
-		return false;
+		return state.disable_magic();
 	}
 
 	/**
@@ -155,32 +145,26 @@ public class Actor implements IXml<Actor> {
 	 * @return
 	 */
 	public boolean status_cannot_evade() {
-		for (Status s : states) {
-			if (s.is_cant_evade)
-				return true;
-		}
+		if (state.cannot_evade())
+			return true;
 		return false;
 	}
 
 	public boolean status_is_confused() {
-		if (status_is_charmed() && status_is_berserk())
+		if(state.random_targeting())
 			return true;
 		return false;
 	}
 
 	public boolean status_is_charmed() {
-		for (Status s : states) {
-			if (s.always_target_allies)
-				return true;
-		}
+		if(state.always_target_allies())
+			return true;
 		return false;
 	}
 
 	public boolean status_is_berserk() {
-		for (Status s : states) {
-			if (s.always_target_enemies)
-				return true;
-		}
+		if(state.always_target_enemies())
+			return true;
 		return false;
 	}
 
@@ -233,9 +217,6 @@ public class Actor implements IXml<Actor> {
 		s += (getRace() == Race.Emberborn || getRace() == Race.Undead) ? 4 : 0;
 		s += (getRace() == Race.Fey) ? -2 : 0;
 		float f = 1.0f;
-		for (Status u : states) {
-			f *= u.ATK_Modifier;
-		}
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
 		// this modifier goes at the end, and applies battle imposed nerf/buffs
@@ -255,9 +236,6 @@ public class Actor implements IXml<Actor> {
 		// if (armor.HasValue) s += armor.Value.DEF;
 		s = Math.max(Math.min(s, 255), 1);
 		float f = 1.0f;
-		for (Status u : states) {
-			f *= (int) u.DEF_Modifier;
-		}
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
 		// this modifier goes at the end, and applies battle imposed nerf/buffs
@@ -271,9 +249,6 @@ public class Actor implements IXml<Actor> {
 		s += weapon.POW;
 		s += armor.POW;
 		float f = 1.0f;
-		for (Status u : states) {
-			s *= (int) u.POW_Modifier;
-		}
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
 		return (int) s;
@@ -289,9 +264,6 @@ public class Actor implements IXml<Actor> {
 		s += weapon.SKL;
 		s += armor.SKL;
 		float f = 1.0f;
-		for (Status u : states) {
-			f *= (int) u.SKL_Modifier;
-		}
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
 		return (int) s;
@@ -308,9 +280,6 @@ public class Actor implements IXml<Actor> {
 		s += weapon.MND;
 		s += armor.MND;
 		float f = 1.0f;
-		for (Status u : states) {
-			f *= (int) u.MND_Modifier;
-		}
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
 		return s;
@@ -323,7 +292,7 @@ public class Actor implements IXml<Actor> {
 
 	public Actor(Klass c, int level) {
 		// Temp
-		skills = new ArrayList<Skill>();
+		skills = new SkillSet(this);
 		// items = new Item[6];
 		// is_male = true;
 		// _damage_factor = Skill_Type.POW;
@@ -348,7 +317,7 @@ public class Actor implements IXml<Actor> {
 		_SPD = 0;
 		weapon = Database.weapons[0];
 		// N_EXP = (48 * level);
-		states = new ArrayList<Status>();
+		state = Status._;
 		// ABSORB_ELEMS = new ArrayList<Elemental>();
 		// RESISTANT_ELEMS = new ArrayList<Elemental>();
 		// IMMUNE_ELEMS = new ArrayList<Elemental>();
@@ -384,10 +353,7 @@ public class Actor implements IXml<Actor> {
 	}
 
 	public float getACC() {
-		float n = 0.98f;
-		for (Status s : states) {
-			n *= (int) s.ACC_Modifier;
-		}
+		float n = state == Status.blind ? 0.49f : 0.98f;
 		n += get_acc_modifier();
 		return n;
 	}
@@ -423,9 +389,6 @@ public class Actor implements IXml<Actor> {
 		n += (getRace() == Race.Ratmen) ? 1 : 0;
 		n += (getRace() == Race.Undead || getRace() == Race.Fauna) ? -1 : 0;
 		float f = 1.0f;
-		for (Status s : states) {
-			f *= (int) s.MOV_Modifier;
-		}
 		n *= f;
 		n = Math.max(Math.min(n, 16), 1);
 		return (int) n;
@@ -446,9 +409,6 @@ public class Actor implements IXml<Actor> {
 		n += (getRace() == Race.Ratmen) ? 1 : 0;
 		n += (getRace() == Race.Undead) ? -1 : 0;
 		n = Math.max(Math.min(n, 16), 1);
-		for (Status s : states) {
-			n *= (int) s.VSN_Modifier;
-		}
 		n = Math.max(Math.min(n, 255), 1);
 		return (int) n;
 	}
@@ -477,9 +437,6 @@ public class Actor implements IXml<Actor> {
 		n += (getRace() == Race.Avis || getRace() == Race.Ratmen || getRace() == Race.Canid) ? 5
 				: 0;
 		float f = 1.0f;
-		for (Status s : states) {
-			f *= (int) s.SPD_Modifier;
-		}
 		n *= f;
 		n = Math.max(Math.min(n, 255), 1);
 		n *= get_spd_modifier();
@@ -495,24 +452,21 @@ public class Actor implements IXml<Actor> {
 
 	}
 
-	public boolean skill_can_use(Skill S) {
-		if (this.SP < S.sp_cost)
+	public boolean skill_can_use(ActiveSkill s) {
+		//cannot be invoked
+		if(s.scope != Skill_Scope.active)
 			return false;
-		for (Status status : states) {
-			if (status.disable_magic && S.is_spell)
+		if (this.SP < s.sp_cost)
+			return false;
+		if (state.disable_magic() && s.is_spell)
 				return false;
-			if (status.disable_skills && !S.is_spell)
+		if (state.disable_special())
 				return false;
-		}
 		return true;
 	}
 
 	public void remove_auto_states(Random rand) {
-		for (int i = states.size() - 1; i >= 0; i--) {
-			if (states.get(i).auto_release(rand)) {
-				states.remove(i);
-			}
-		}
+		state.auto_release(rand);
 	}
 
 	@Override
@@ -536,15 +490,12 @@ public class Actor implements IXml<Actor> {
 		xml.element("SPD").text(_SPD).pop();
 		xml.element("ATK").text(_ATK).pop();
 		xml.element("DEF").text(_DEF).pop();
-		xml.element("SKills");
-		for (Skill S : skills) {
+		xml.element("Skills");
+		for (Skill S : skills.skills()) {
 			xml.element("Skill").text(S.id).pop();
 		}
 		xml.pop();
-		xml.element("States");
-		for (Status S : states) {
-			xml.element("Status").text(S.id).pop();
-		}
+		xml.element("State").text(state.ordinal()).pop();
 		xml.pop();
 		xml.element("Weapon").text(weapon.id).pop();
 		xml.element("Armor").text(armor.id).pop();
@@ -571,14 +522,11 @@ public class Actor implements IXml<Actor> {
 		actor._SPD = element.getInt("SPD");
 		actor._ATK = element.getInt("ATK");
 		actor._DEF = element.getInt("DEF");
-		actor.skills = new ArrayList<Skill>();
+		actor.skills = new SkillSet(this);
 		for (Element E : element.getChildrenByName("Skills")) {
-			skills.add(Database.skills[E.getInt("Skill")]);
+			//skills.add(Database.skills[E.getInt("Skill")]);
 		}
-		actor.states = new ArrayList<Status>();
-		for (Element E : element.getChildrenByName("States")) {
-			states.add(Database.states[E.getInt("Status")]);
-		}
+		actor.state = Status.values()[element.getInt("State")];
 		actor.weapon = Database.weapons[element.getInt("Weapon")];
 		actor.armor = Database.armors[element.getInt("Armor")];
 		return actor;

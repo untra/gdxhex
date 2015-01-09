@@ -11,6 +11,7 @@ import untra.driver.IXml;
 
 public class Klass implements IXml<Klass>, Idata {
 	private static final char DEFAULT_VALUE = 'D';
+	private static final int[] GAINS_DEFAULT = {1,1,1,1,1,4,9,15,19,24,29,35,41,44,49,55};
 
 	// public int id;
 	public String name;
@@ -25,9 +26,14 @@ public class Klass implements IXml<Klass>, Idata {
 	public char SPDv; // 7
 	public char ATKv; // 8
 	public char DEFv; // 9
-	public Weapon_Type wpn_A;
-	public Weapon_Type wpn_B;
+//	public Weapon_Type wpn_A;
+//	public Weapon_Type wpn_B;
 	public Race race;
+	public int[] skills;
+	/**
+	 * the set of levels these skills are gained at
+	 */
+	public int[] gains;
 
 	public Klass() {
 		id = 0;
@@ -42,11 +48,128 @@ public class Klass implements IXml<Klass>, Idata {
 		MOVv = DEFAULT_VALUE;
 		ATKv = DEFAULT_VALUE;
 		DEFv = DEFAULT_VALUE;
-		wpn_A = Weapon_Type.none;
-		wpn_B = Weapon_Type.none;
+//		wpn_A = Weapon_Type.none;
+//		wpn_B = Weapon_Type.none;
 		race = Race.Human;
+		skills = new int[16];
+		gains = GAINS_DEFAULT;
 	}
 
+	public static Klass K_WARRIOR()
+	{
+		Klass klass = new Klass();
+		klass.id = 11;
+		klass.name = "Warrior";
+		klass.HPv = 'B';
+		klass.SPv = 'C';
+		klass.POWv = 'A';
+		klass.SKLv = 'F';
+		klass.MNDv = 'D';		
+		klass.SPDv = 'D';
+		klass.VSNv = 'D';
+		klass.MOVv = 'D';
+		klass.ATKv = 'B';
+		klass.DEFv = 'B';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	public static Klass K_ARCHER()
+	{
+		Klass klass = new Klass();
+		klass.id = 12;
+		klass.name = "Archer";
+		klass.HPv = 'D';
+		klass.SPv = 'C';
+		klass.POWv = 'D';
+		klass.SKLv = 'A';
+		klass.MNDv = 'D';
+		klass.MOVv = 'D';
+		klass.VSNv = 'C';
+		klass.SPDv = 'B';
+		klass.ATKv = 'C';
+		klass.DEFv = 'C';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	public static Klass K_THIEF()
+	{
+		Klass klass = new Klass();
+		klass.id = 13;
+		klass.name = "Thief";
+		klass.HPv = 'D';
+		klass.SPv = 'C';
+		klass.POWv = 'C';
+		klass.SKLv = 'C';
+		klass.MNDv = 'C';
+		klass.MOVv = 'C';
+		klass.VSNv = 'B';
+		klass.SPDv = 'B';
+		klass.ATKv = 'D';
+		klass.DEFv = 'D';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	public static Klass K_MONK()
+	{
+		Klass klass = new Klass();
+		klass.id = 14;
+		klass.name = "Monk";
+		klass.HPv = 'C';
+		klass.SPv = 'C';
+		klass.POWv = 'C';
+		klass.SKLv = 'C';
+		klass.MNDv = 'C';
+		klass.MOVv = 'C';
+		klass.VSNv = 'D';
+		klass.SPDv = 'C';
+		klass.ATKv = 'C';
+		klass.DEFv = 'C';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	public static Klass K_SCHOLAR()
+	{
+		Klass klass = new Klass();
+		klass.id = 15;
+		klass.name = "Scholar";
+		klass.HPv = 'A';
+		klass.SPv = 'B';
+		klass.POWv = 'C';
+		klass.SKLv = 'C';
+		klass.MNDv = 'B';
+		klass.MOVv = 'D';
+		klass.VSNv = 'D';
+		klass.SPDv = 'D';
+		klass.ATKv = 'D';
+		klass.DEFv = 'D';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	public static Klass K_MAGICIAN()
+	{
+		Klass klass = new Klass();
+		klass.id = 16;
+		klass.name = "Magician";
+		klass.HPv = 'C';
+		klass.SPv = 'A';
+		klass.POWv = 'D';
+		klass.SKLv = 'C';
+		klass.MNDv = 'A';
+		klass.MOVv = 'D';
+		klass.VSNv = 'D';
+		klass.SPDv = 'C';
+		klass.ATKv = 'D';
+		klass.DEFv = 'D';
+		klass.race = Race.Human;
+		return klass;
+	}
+	
+	
 	public int advance(int b, Random rand) {
 		int table = -1;
 		char check = 'F';
@@ -178,12 +301,12 @@ public class Klass implements IXml<Klass>, Idata {
 		xml.element("SPDv").text(this.SPDv).pop();
 		xml.element("ATKv").text(this.ATKv).pop();
 		xml.element("DEFv").text(this.DEFv).pop();
-		xml.element("wpn_A");
-		this.wpn_A.xmlWrite(xml);
-		xml.pop();
-		xml.element("wpn_B");
-		this.wpn_B.xmlWrite(xml);
-		xml.pop();
+//		xml.element("wpn_A");
+//		this.wpn_A.xmlWrite(xml);
+//		xml.pop();
+//		xml.element("wpn_B");
+//		this.wpn_B.xmlWrite(xml);
+//		xml.pop();
 		xml.element("race");
 		this.race.xmlWrite(xml);
 		xml.pop();
@@ -206,8 +329,8 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.MOVv = element.get("MOVv").charAt(0);
 		klass.SPDv = element.get("SPDv").charAt(0);
 		klass.VSNv = element.get("VSNv").charAt(0);
-		klass.wpn_A = wpn_A.xmlRead(element.getChildByName("wpn_A"));
-		klass.wpn_B = wpn_A.xmlRead(element.getChildByName("wpn_B"));
+		//klass.wpn_A = wpn_A.xmlRead(element.getChildByName("wpn_A"));
+		//klass.wpn_B = wpn_A.xmlRead(element.getChildByName("wpn_B"));
 		klass.race = race.xmlRead(element.getChildByName("race"));
 		readcount++;
 		return klass;
@@ -244,10 +367,10 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.DEFv = toAcceptableChar(in.next().charAt(0));
 		System.out.println("Equippable Weapons");
 		System.out.println(Weapon_Type.toOrdinalString());
-		System.out.print("Weapon A:");
-		klass.wpn_A = Weapon_Type.values()[in.nextInt()];
-		System.out.print("Weapon B:");
-		klass.wpn_B = Weapon_Type.values()[in.nextInt()];
+		//System.out.print("Weapon A:");
+		//klass.wpn_A = Weapon_Type.values()[in.nextInt()];
+		//System.out.print("Weapon B:");
+		//klass.wpn_B = Weapon_Type.values()[in.nextInt()];
 		System.out.println("Race");
 		System.out.println(Race.toOrdinalString());
 		System.out.print("Race:");

@@ -15,6 +15,8 @@ public class Battle_Effects implements IXml<Battle_Effects> {
 	public boolean Counter;// 8
 	public boolean Defending;// 16
 	public boolean Evading;// 32
+	public boolean Studied;//64
+	public boolean Clumsy;//128 
 
 	private void setvalue() {
 		value = 0;
@@ -24,10 +26,20 @@ public class Battle_Effects implements IXml<Battle_Effects> {
 		value += Counter ? 8 : 0;
 		value += Defending ? 16 : 0;
 		value += Evading ? 32 : 0;
+		value += Studied ? 64 : 0;
+		value += Clumsy ? 128 : 0;
 	}
 
 	private Battle_Effects fromValue(int v) {
 		Battle_Effects F = new Battle_Effects();
+		if (v >= 128) {
+			F.Clumsy = true;
+			v -= 128;
+		}
+		if (v >= 64) {
+			F.Studied = true;
+			v -= 64;
+		}
 		if (v >= 32) {
 			F.Evading = true;
 			v -= 32;

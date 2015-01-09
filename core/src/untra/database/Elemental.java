@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 import untra.driver.IXml;
 
 public enum Elemental implements IXml<Elemental> {
-	none, Fire, Ice, Thunder, Water, Earth, Wind, Plant, Machine, Undead;
+	none, Fire, Ice, Thunder, Water, Earth, Wind, Plant, Machine, Undead, Holy;
 
 	@Override
 	public void xmlWrite(XmlWriter xml) throws IOException {
@@ -101,6 +101,13 @@ public enum Elemental implements IXml<Elemental> {
 				return 0.3f;
 			if (target.elementals.contains(Ice))
 				return 0.5f;
+		case Holy:
+			if (target.elementals.contains(Undead))
+				return 1.5f;
+			if (target.elementals.contains(Holy))
+				return -0.3f;
+			if (target.elementals.contains(Machine))
+				return 0.3f;
 		default:
 			return 1.0f;
 		}
