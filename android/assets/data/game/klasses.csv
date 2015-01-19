@@ -1,0 +1,10 @@
+id,name,description,HPv,SPv,POWv,SKLv,MNDv,SPDv,MOVv,VSNv,ATKv,DEFv,sp1,sp2,skills
+0,Thief,    TODO: set this,D,D,D,B,D,B,C,D,D,D,25,35,0|2012|2007|2201|26|25|2211|27|28|1101|2203|2205|29|2208|0|0
+1,Soldier,  TODO: set this,B,D,C,D,D,D,D,D,C,C,25,35,0|2007|2011|2010|2021|9|15|16|17|2030|2201|26|45|18|0|0
+2,Warrior,  TODO: set this,C,D,C,C,C,C,D,D,D,D,25,35,0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+3,Knight,   TODO: set this,D,C,A,D,D,D,D,D,C,D,25,35,0|2010|2003|2022|10|35|36|38|39|2204|2101|46|1201|47|0|0
+4,Swordsman,TODO: set this,C,C,C,C,C,C,D,D,C,C,25,35,0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+5,Healer,   TODO: set this,A,C,D,D,C,D,D,D,D,D,25,35,0|2107|2108|2012|10|1|5|2|6|3|7|8|4|2216|0|0
+6,Archer,   TODO: set this,D,D,D,A,D,D,D,B,D,D,25,35,0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+5,Monk,     TODO: set this,D,C,C,C,C,C,D,D,D,D,25,35,0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0
+6,Fire Mage,TODO: set this,D,A,D,D,B,D,D,D,D,D,25,35,0|2107|65|2001|2031|11|2117|12|2106|13|95|14|2207|2127|0|0

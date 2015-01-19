@@ -1,64 +1,79 @@
 id,name,description,scope,level_cost,prereq
-3001,Staves,Can equip Staves,2,0,0
-3002,Bows,Can equip Bows,2,0,0
-3003,Large blades,Can equip Large blades,2,0,0
-3004,Claws,Can equip Claws,2,0,0
-3005,Wands,Can equip Wands,2,0,0
-3006,Guns,Can equip Guns,2,2,0
-3007,Short blades,Can equip Short blades,2,1,0
-3008,Maces,Can equip Maces,2,1,0
-3009,Hammers,Can equip Hammers,2,2,0
-3010,Lances,Can equip Lances,2,2,0
-3011,Axes,Can equip Axes,2,2,0
-3012,Knives,Can equip Knives,2,0,0
-3013,Bombs,Can equip Bombs,2,3,0
-3020,Light armor,Can equip Light Armor,2,0,0
-3021,Medium armor,Can equip Medium Armor,2,0,0
-3022,Heavy armor,Can equip Heavy Armor,2,0,0
-3023,Shields,Can equip Shields,2,1,0
-3100,Balance 1,Increases EVA by 1 stage before battle,2,1,0
-3101,Strength 1,Increases ATK by 1 stage before battle,2,1,0
-3102,Agility 1,Increases SPD by 1 stage before battle,2,1,0
-3103,Concentration 1,Increases ACC by 1 stage before battle,2,1,0
-3104,Fortitude 1,Increases DEF by 1 stage before battle,2,1,0
-3105,Jumping 1,Allows for movement across height differences less than 3,2,1,0
-3106,Channeling 1,reduces spell costs by 10%,2,2,0
-3107,Revitalize 1,Increases SP regen up to 1 more sp per turn,2,2,0
-3108,Regenerate 1,Increases HP regen up to 1 more sp per turn,2,2,0
-3109,Resistance 1,Chance of incurring debuff reduced by 20%,2,2,0
-3110,Balance 2,Increases EVA by 2 stages before battle,2,3,0
-3111,Strength 2,Increases ATK by 2 stages before battle,2,3,3101
-3112,Agility 2,Increases SPD by 2 stages before battle,2,3,3102
-3113,Concentration 2,Increases ACC by 2 stages before battle,2,3,3103
-3114,Fortitude 2,Increases DEF by 2 stages before battle,2,3,3104
-3115,Jumping 2,Allows for movement across height differences less than 4,2,3,3105
-3116,Channeling 2,reduces spell costs by 20%,2,4,3106
-3117,Revitalize 2,Increases SP regen up to 2 more sp per turn,2,4,3107
-3118,Regenerate 2,Increases HP regen up to 2 more sp per turn,2,4,3108
-3119,Resistance 2,Chance of incurring debuff reduced by 40%,2,4,3109
-3120,Balance 3,Increases EVA by 3 stages before battle,2,5,3110
-3121,Strength 3,Increases ATK by 3 stages before battle,2,5,3111
-3122,Agility 3,Increases SPD by 3 stages before battle,2,5,3112
-3123,Concentration 3,Increases ACC by 3 stages before battle,2,5,3113
-3124,Fortitude 3,Increases DEF by 3 stages before battle,2,5,3114
-3125,Jumping 3,Allows for movement across height differences less than 5,2,5,3115
-3126,Channeling 3,reduces spell costs by 30%,2,6,3116
-3127,Revitalize 3,Increases SP regen up to 3 more sp per turn,2,6,3117
-3128,Regenerate 3,Increases HP regen up to 3 more sp per turn,2,6,3118
-3129,Resistance 3,Chance of incurring debuff reduced by 60%,2,7,3119
-3200,Monkeygrip,Can wield two-handed weapons with one hand,2,2,0
-3201,Maitenance,Armor and Weapon durability decreases slower,2,2,0
-3202,Death Strike,Improved critical chance,2,3,0
-3203,Twinstrike,Improved multistrike chance,2,3,0
-3204,Bonecrusher,Improved knockback chance,2,3,0
-3205,Dual wield,May equip a one-handed weapon in each hand without clumsy,2,5,0
-3206,Battlewise,May learn unique skills when hit with them,2,4,0
-3207,Piercing,Spells ignore reaction abilities,2,5,0
-3208,Item lore,Improves item effects,2,3,0
-3209,Blood price,Spells consume HP instead of SP. Damage first draws from SP,2,6,0
-3210,Perception,Can see traps within the sight radius,2,1,0
-3211,Lightfooted,Traps are not triggered when stepped on,2,2,3210
-3212,Dismantling,Can destroy traps as a context command,2,3,3211
-3213,Unscarred,Basic attacks critical when at full HP,2,3,0
-3214,Vigilante,Attacks from the side and back do normal damage,2,6,0
-3215,Teleportation,Movement by teleportation,2,4,0
+2001,Staves,Can equip Staves,2,0,0
+2002,Bows,Can equip Bows,2,0,0
+2003,Large blades,Can equip Large blades,2,0,0
+2004,Claws,Can equip Claws,2,0,0
+2005,Wands,Can equip Wands,2,0,0
+2006,Guns,Can equip Guns,2,2,0
+2007,Short blades,Can equip Short blades,2,1,0
+2008,Maces,Can equip Maces,2,1,0
+2009,Hammers,Can equip Hammers,2,2,0
+2010,Lances,Can equip Lances,2,2,0
+2011,Axes,Can equip Axes,2,2,0
+2012,Knives,Can equip Knives,2,0,0
+2013,Bombs,Can equip Bombs,2,3,0
+2019,Natural weapon,Attacks are made with the characaters claws or fangs,2,3,0
+2020,Light armor,Can equip Light Armor,2,0,0
+2021,Medium armor,Can equip Medium Armor,2,0,0
+2022,Heavy armor,Can equip Heavy Armor,2,0,0
+2029,Natural armor,Defence is made with the characters scales or tough body,2,3,0
+2030,Shields,Can equip Shields,2,1,0
+2031,Elemental Fire,Elemental Fire,2,1,0
+2032,Elemental Ice,Elemental ice,2,1,0
+2033,Elemental Lightning,Elemental Lightning,2,1,0
+2034,Elemental Water,Elemental Water,2,1,0
+2035,Elemental Earth,Elemental Earth,2,1,0
+2036,Elemental Wind,Elemental Wind,2,1,0
+2037,Elemental Plant,Elemental Plant,2,1,0
+2038,Elemental Machine,Elemental Machine,2,1,0
+2039,Elemental Undead,Elemental Undead,2,1,0
+2100,Balance 1,In
+creases EVA by 1 stage before battle,2,1,0
+2101,Strength 1,Increases ATK by 1 stage before battle,2,1,0
+2102,Agility 1,Increases SPD by 1 stage before battle,2,1,0
+2103,Concentration 1,Increases ACC by 1 stage before battle,2,1,0
+2104,Fortitude 1,Increases DEF by 1 stage before battle,2,1,0
+2105,Jumping 1,Allows for movement across height differences less than 3,2,1,0
+2106,Channeling 1,reduces spell costs by 10%,2,2,0
+2107,Revitalize 1,Increases SP regen up to 1 more sp per turn,2,2,0
+2108,Regenerate 1,Increases HP regen up to 1 more sp per turn,2,2,0
+2109,Resistance 1,Chance of incurring debuff reduced by 20%,2,2,0
+2110,Balance 2,Increases EVA by 2 stages before battle,2,3,0
+2111,Strength 2,Increases ATK by 2 stages before battle,2,3,3101
+2112,Agility 2,Increases SPD by 2 stages before battle,2,3,3102
+2113,Concentration 2,Increases ACC by 2 stages before battle,2,3,3103
+2114,Fortitude 2,Increases DEF by 2 stages before battle,2,3,3104
+2115,Jumping 2,Allows for movement across height differences less than 4,2,3,3105
+2116,Channeling 2,reduces spell costs by 20%,2,4,3106
+2117,Revitalize 2,Increases SP regen up to 2 more sp per turn,2,4,3107
+2118,Regenerate 2,Increases HP regen up to 2 more sp per turn,2,4,3108
+2119,Resistance 2,Chance of incurring debuff reduced by 40%,2,4,3109
+2120,Balance 3,Increases EVA by 3 stages before battle,2,5,3110
+2121,Strength 3,Increases ATK by 3 stages before battle,2,5,3111
+2122,Agility 3,Increases SPD by 3 stages before battle,2,5,3112
+2123,Concentration 3,Increases ACC by 3 stages before battle,2,5,3113
+2124,Fortitude 3,Increases DEF by 3 stages before battle,2,5,3114
+2125,Jumping 3,Allows for movement across height differences less than 5,2,5,3115
+2126,Channeling 3,reduces spell costs by 30%,2,6,3116
+2127,Revitalize 3,Increases SP regen up to 3 more sp per turn,2,6,3117
+2128,Regenerate 3,Increases HP regen up to 3 more sp per turn,2,6,3118
+2129,Resistance 3,Chance of incurring debuff reduced by 60%,2,7,3119
+2200,Monkeygrip,Can wield two-handed weapons with one hand,2,2,0
+2201,Maitenance,Armor and Weapon durability decreases slower,2,2,0
+2202,Death Strike,Improved critical chance,2,3,0
+2203,Twinstrike,Improved multistrike chance,2,3,0
+2204,Bonecrusher,Improved knockback chance,2,3,0
+2205,Dual wield,May equip a one-handed weapon in each hand without clumsy,2,5,0
+2206,Battlewise,May learn unique skills when hit with them,2,4,0
+2207,Piercing,Spells ignore reaction abilities,2,5,0
+2208,Item lore,Improves item effects,2,3,0
+2209,Blood price,Spells consume HP instead of SP. Damage first draws from SP,2,6,0
+2210,Perception,Can see traps within the sight radius,2,1,0
+2211,Lightfooted,Traps are not triggered when stepped on,2,2,3210
+2212,Dismantling,Can destroy traps as a context command,2,3,3211
+2213,Unscarred,Basic attacks critical when at full HP,2,3,0
+2214,Vigilante,Attacks from the side and back do normal damage,2,6,0
+2215,Teleportation,Movement by teleportation,2,4,0
+2216,Immunity,Cannot be inflicted with a negative status,2,6,0
+2217,Vermin,Cannot be poisoned,2,6,0
+2218,Pheonix,Character will return after death in battle,2,6,0

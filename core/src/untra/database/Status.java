@@ -234,8 +234,26 @@ public enum Status {
 		switch (this) {
 		case dead:
 			return Integer.MAX_VALUE;
+		case poison:
+			return 5;
+		case blind:
+			return 5;
+		case paralyze:
+			return 4;
 		default:
 			return 3;
+		}
+	}
+	
+	public float slip_damage_float()
+	{
+		switch (this) {
+		case burned:
+			return 0.2f;
+		case poison:
+			return 0.1f;
+		default:
+			return 0.0f;
 		}
 	}
 	

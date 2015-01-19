@@ -2,10 +2,8 @@ package untra.database;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -62,6 +60,22 @@ public class Data {
 		return (string == "null") ? alt : string;
 	}
 
+	public int[] getIntArray(String key, int size)
+	{
+		String[] split = key.split("|");
+		if(size != split.length) 
+		{
+			System.out.println("warning: bad size");
+			return new int[0];
+		}
+		int[] result = new int[size];
+		for (int i = 0; i < size ; i++) {
+			result[i] = getInt(split[i],0);
+		}
+		return result;
+		
+	}
+	
 	public int getInt(String key, int alt) {
 		String string = getString(key);
 		return (string == "null") ? alt : Integer.valueOf(string);

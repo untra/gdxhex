@@ -2,15 +2,19 @@ package untra.graphics;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import untra.driver.Base;
 
 public class Draw_Object extends SpriteBatch {
 
 	private static final GameColor DEFAULT_TEXT_COLOR = GameColor.WHITE;
-	private static Font_Object regular_text;
-	private static Font_Object smaller_text;
+	private static BitmapFont regular_text;
+	private static BitmapFont smaller_text;
+	
 
 	/*
 	 * public void Draw_Outline(Sprite sprite, Color outline) { Color temp =
@@ -31,13 +35,22 @@ public class Draw_Object extends SpriteBatch {
 		System.out.println("Drawobject Initializing...");
 		//Texture.setEnforcePotImages(false);
 		try {
-			regular_text = new Font_Object(Gdx.files.internal("fonts/"
-					+ Base.default_font_name), true);
-			smaller_text = new Font_Object(Gdx.files.internal("fonts/"
-					+ Base.default_font_name), true);
-			regular_text.setColor(DEFAULT_TEXT_COLOR);
-			smaller_text.setColor(DEFAULT_TEXT_COLOR);
-			System.out.println("Drawobject Initialization Great Success!");
+//			regular_text = new Font_Object(Gdx.files.internal("fonts/"
+//					+ Base.default_font_name), true);
+//			smaller_text = new Font_Object(Gdx.files.internal("fonts/"
+//					+ Base.small_font_name), true);
+//			regular_text.setColor(DEFAULT_TEXT_COLOR);
+//			smaller_text.setColor(DEFAULT_TEXT_COLOR);
+//			System.out.println("Drawobject Initialization Great Success!");
+			FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Minecraftia.ttf"));
+			FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+			//parameter.characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*";
+			parameter.flip = true;
+			parameter.size = 12;
+			smaller_text = generator.generateFont(parameter); // font size 12 pixels
+			parameter.size = 16;
+			regular_text = generator.generateFont(parameter); // font size 12 pixels
+			generator.dispose(); // don't forget to dispose to avoid memory leaks!
 		} catch (Exception e) {
 			System.out.println("Draw Object Initialization Failed!");
 			e.printStackTrace();
@@ -118,7 +131,7 @@ public class Draw_Object extends SpriteBatch {
 			GameColor color) {
 		// Color previousColor = (Color) regular_text.getColor();
 		regular_text.setColor(color);
-		regular_text.draw(this, str, x, height() - y);
+		regular_text.draw(this, str, x, y);
 		// regular_text.setColor(previousColor);
 	}
 
@@ -126,7 +139,7 @@ public class Draw_Object extends SpriteBatch {
 			GameColor color) {
 		// GameColor previousColor = (GameColor) smaller_text.getColor();
 		smaller_text.setColor(color);
-		smaller_text.draw(this, str, x, height() - y);
+		smaller_text.draw(this, str, x, y);
 		// smaller_text.setColor(previousColor);
 	}
 

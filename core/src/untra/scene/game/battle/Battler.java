@@ -110,11 +110,11 @@ public class Battler implements IXml<Battler> {
 		if (this.current_action.kind == BattleAction.Kind.attack)
 			this.tentative_exp += (int) (d * f);
 		else if (this.current_action.kind == BattleAction.Kind.special)
-			if (skill.scope == Skill_Scope.attack)
+			if (skill.is_attacking_skill())
 				this.tentative_exp += (int) (d * f * (float) (skill.sp_cost / this.properties
 						.MAX_SP()));
-			else if (skill.scope == Skill_Scope.heal)
-				this.tentative_exp += (int) (-d * f * .5f);
+			else if (skill.is_healing_skill())
+				this.tentative_exp += (int) (-d * f);
 	}
 
 	/**
@@ -214,11 +214,10 @@ public class Battler implements IXml<Battler> {
 		if (is_dead())
 			return;
 		int damage = 0;
-		for (Status S : properties.states) {
-			if (S.is_slip_damage) {
-				damage += (properties.MAX_HP() * (S.slip_damage_percentage));
-				damage += S.slip_damage_value;
-			}
+		Status status = properties.state;
+		if (status.is_slip_damage()) {
+			damage += (properties.MAX_HP() * (status.slip_damage_float()));
+			//damage += status.slip_damage_value;
 		}
 		if (damage > 0) {
 			// target_animation = target_animation.Number(damage.ToString(),
@@ -575,10 +574,9 @@ public class Battler implements IXml<Battler> {
 	/**
 	 * Returns true if the battler has a healing skill in their inventory
 	 */
-
 	public boolean can_heal() {
-		for (Skill s : properties.skills) {
-			if (s.scope == Skill_Scope.heal)
+		for (ActiveSkill s : properties.skills.activeskills()) {
+			if (s.is_healing_skill())
 				if (properties.skill_can_use(s))
 					return true;
 		}

@@ -5,8 +5,6 @@ import java.io.IOException;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import untra.driver.IXml;
-
 public class Armor extends Item implements Idata {
 
 	public int id;

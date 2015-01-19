@@ -1243,7 +1243,7 @@ public class BattleScene extends GameScene {
 			 * Active_Battler().turn_to(All_Range[0]); }
 			 */
 			active_battler().target_animation = new AnimationInstance(use_anim);
-			Base.wait = use_anim.framecount;
+			Base.wait = use_anim.framemax;
 			check_projectiles();
 
 			if (active_battler().current_action.kind == BattleAction.Kind.special) {
@@ -1272,7 +1272,7 @@ public class BattleScene extends GameScene {
 			else {
 				// no targets, play animation at tile
 			}
-			Base.wait = hit_anim.framecount - (Base.Pop_Damage_Frames / 2);
+			Base.wait = hit_anim.framemax - (Base.Pop_Damage_Frames / 2);
 			STEP = 3;
 			return;
 		}

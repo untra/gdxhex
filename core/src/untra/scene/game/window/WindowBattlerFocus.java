@@ -11,6 +11,7 @@ import untra.database.Skill;
 import untra.driver.Base;
 
 public class WindowBattlerFocus extends WindowBattle {
+	private static final float MINWIDTH = 0.02f;
 	private boolean advanced_info = true;
 	private int fHP, fSP;
 	// private Battler battler();
@@ -59,20 +60,21 @@ public class WindowBattlerFocus extends WindowBattle {
 		if (isPanning()) {
 			float x = ocoordinates().x;
 			float y = ocoordinates().y;
-			hpa.setPosition(x, y + 16);
-			hpb.setPosition(x, y + 16);
-			spa.setPosition(x, y + 48);
-			spb.setPosition(x, y + 48);
+			hpa.setPosition(x, y + 24);
+			hpb.setPosition(x, y + 24);
+			spa.setPosition(x, y + 52);
+			spb.setPosition(x, y + 52);
 			// hp_gauge.setPosition(x, y + 16);
 			// sp_gauge.setPosition(x, y + 48);
 			battler().face_graphic.setPosition(x + width() - 144, y + height()
 					- 128);
 		}
-		/*
-		 * if (Main.Ticks % 10 == 0 && status_actor.Properties.HP > 1 &&
-		 * status_actor.Properties.SP > 1) { status_actor.Properties.HP--;
-		 * status_actor.Properties.SP--; }
-		 */
+		
+		//temporary, lowers hp,sp to see change in gradients.
+		//TODO: remove this!
+		 if (Base.ticks() % 20 == 0 && battler().properties.HP > 1) { battler().properties.HP--;}
+		 if (Base.ticks() % 20 == 0 && battler().properties.SP > 1) { battler().properties.SP--; }
+		
 	}
 
 	private void refresh() {
@@ -90,12 +92,14 @@ public class WindowBattlerFocus extends WindowBattle {
 		}
 		// hp_gauge.horzstretch((status_actor.Properties.HP_rate));
 		// sp_gauge.horzstretch((status_actor.Properties.SP_rate));
-		hpa.horzstretch(200 * battler().properties.HP_rate());
-		hpb.horzstretch(200 * battler().properties.HP_rate());
-		spa.horzstretch(200 * battler().properties.SP_rate());
-		spb.horzstretch(200 * battler().properties.SP_rate());
+		float hpr = Math.max(MINWIDTH, battler().properties.HP_rate());
+		float spr = Math.max(MINWIDTH, battler().properties.SP_rate());
+		hpa.horzstretch(200 * hpr);
+		hpb.horzstretch(200 * hpr);
+		spa.horzstretch(200 * spr);
+		spb.horzstretch(200 * spr);
 		hpa.setopacity(battler().properties.HP_rate());
-		hpb.setopacity(battler().properties.SP_rate());
+		spa.setopacity(battler().properties.SP_rate());
 		battler().face_graphic.setPosition(ocoordinates().x + width() - 144,
 				ocoordinates().y + height() - 128);
 		fHP = battler().properties.HP;
@@ -110,6 +114,16 @@ public class WindowBattlerFocus extends WindowBattle {
 		// sp_gauge.draw(s_batch);
 		hpb.draw(s_batch);
 		spb.draw(s_batch);
+		int x = hpa.getx();
+		int y =	hpa.gety();
+		float width = hpa.width() +4;
+		float height = hpa.height() +4;
+		draw_bounding_box(s_batch, x, y, width, height);
+		x = spa.getx();
+		y = spa.gety();
+		width = spa.width() +4;
+		height = spa.height() +4;
+		draw_bounding_box(s_batch, x, y, width, height);
 		hpa.draw(s_batch);
 		spa.draw(s_batch);
 		if (advanced_info)
@@ -119,21 +133,23 @@ public class WindowBattlerFocus extends WindowBattle {
 	}
 
 	private void draw_advanced_info(Draw_Object s_batch) {
-		// Vector2 P = ocoordinates();
+		Vector2 pos = ocoordinates();
 		// s_batch.Draw_Outlined_Text(battler().Properties.name, new
 		// Vector2(
 		// ocoordinates().x, ocoordinates().y - 8), GameColor.TRUEWHITE);
-		s_batch.draw_smaller_text(battler().properties.Name, ocoordinates().x,
-				ocoordinates().y - 8, GameColor.WHITE);
+		draw_actor_level(s_batch, battler().properties, pos, true);
+		pos.x += 28;
+		s_batch.draw_smaller_text(battler().properties.Name, pos.x,
+				pos.y, GameColor.WHITE);
 		// s_batch.Draw_Outlined_Text(battler().Properties.cclass.Name, P,
 		// Color.White);
 		battler().face_graphic.draw(s_batch);
 		draw_actor_status(s_batch, battler().properties, new Vector2(
 				ocoordinates().x + 128, ocoordinates().y + 96));
 		draw_actor_hp(s_batch, battler().properties, new Vector2(
-				ocoordinates().x - 8, ocoordinates().y + 20), true);
+				ocoordinates().x - 8, ocoordinates().y + 32), true);
 		draw_actor_sp(s_batch, battler().properties, new Vector2(
-				ocoordinates().x - 8, ocoordinates().y + 52), true);
+				ocoordinates().x - 8, ocoordinates().y + 60), true);
 	}
 
 	private void draw_basic_info(Draw_Object s_batch) {
@@ -146,8 +162,8 @@ public class WindowBattlerFocus extends WindowBattle {
 		draw_actor_status(s_batch, battler().properties, new Vector2(
 				ocoordinates().x + 128, ocoordinates().y + 96));
 		draw_actor_hp(s_batch, battler().properties, new Vector2(
-				ocoordinates().x, ocoordinates().y + 32 - 8), false);
+				ocoordinates().x, ocoordinates().y + 32), false);
 		draw_actor_sp(s_batch, battler().properties, new Vector2(
-				ocoordinates().x, ocoordinates().y + 64 - 8), false);
+				ocoordinates().x, ocoordinates().y + 60), false);
 	}
 }

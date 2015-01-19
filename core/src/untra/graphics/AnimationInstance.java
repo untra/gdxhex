@@ -26,7 +26,7 @@ public class AnimationInstance extends Animation implements Disposable {
 	public AnimationInstance(Animation a) {
 		sheet = new SpriteSet("Animations/" + a.name + ".png", a.columns,
 				a.rows);
-		Frames = new Frame[framecount];
+		Frames = new Frame[framemax];
 	}
 
 	private void update() {
@@ -99,11 +99,9 @@ public class AnimationInstance extends Animation implements Disposable {
 		}
 	}
 
-	// / <summary>
-	// / returns the scale of the number animation
-	// / </summary>
-	// / <param name="t"></param>
-	// / <returns></returns>
+	/*
+	 * Returns the scale of a number animation
+	 */
 	private float number_scale(int t) {
 		switch (t) {
 		case 1:
@@ -122,11 +120,12 @@ public class AnimationInstance extends Animation implements Disposable {
 		}
 	}
 
-	// / <summary>
-	// / returns the position of the number animation
-	// / </summary>
-	// / <param name="t"></param>
-	// / <returns></returns>
+	/**
+	 * returns the position of the number animation
+	 * @param t
+	 * @param x
+	 * @return
+	 */
 	private Vector2 number_pos(int t, int x) {
 		Vector2 pos = this.pos.cpy();
 		pos.x += x * 16 + Base.tile_pixel_width / 2;
@@ -164,7 +163,7 @@ public class AnimationInstance extends Animation implements Disposable {
 	}
 
 	public boolean has_next_frame() {
-		if (current_frame < framecount)
+		if (current_frame < framemax)
 			return true;
 		else
 			return false;
@@ -174,7 +173,7 @@ public class AnimationInstance extends Animation implements Disposable {
 		AnimationInstance a = new AnimationInstance(Database.animations[0]);
 		a.content = text;
 		a.shade = c;
-		a.framecount = Base.Pop_Damage_Frames;
+		a.framemax = Base.Pop_Damage_Frames;
 		return a;
 	}
 

@@ -1,5 +1,7 @@
 package untra.scene.game.window;
 
+import java.util.logging.Level;
+
 import untra.gamewindow.SelectionWindow;
 import untra.graphics.Draw_Object;
 import untra.graphics.GameColor;
@@ -42,6 +44,29 @@ public class WindowBattle extends SelectionWindow {
 		else
 			s_batch.draw_smaller_text("??" + "/" + "??", pos.x, pos.y,
 					GameColor.WHITE);
+	}
+	
+	protected void draw_actor_level(Draw_Object s_batch, Actor actor, Vector2 pos,
+			boolean known) {
+		pos.y -= 2;
+		pos.x -= 10;
+		s_batch.draw_smaller_text("Lv.", pos.x, pos.y, GameColor.DARKGOLDENROD);
+		s_batch.draw_smaller_text("Lv.", pos.x, pos.y-2, GameColor.GOLD);
+		pos.x += 26;
+		if (known)
+		{
+			String level = Integer.toString(actor.LEVEL);
+			s_batch.draw_regular_text(level, pos.x, pos.y, GameColor.LIGHTGRAY);
+			s_batch.draw_regular_text(level, pos.x,	pos.y-2, GameColor.WHITE);
+			
+		}
+		else
+		{
+			s_batch.draw_smaller_text("??", pos.x, pos.y,
+					GameColor.WHITE);
+			s_batch.draw_smaller_text("??", pos.x, pos.y,
+					GameColor.LIGHTGRAY);
+		}
 	}
 
 	protected void draw_actor_sp(Draw_Object s_batch, Actor actor, Vector2 pos,

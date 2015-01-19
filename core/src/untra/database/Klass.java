@@ -9,13 +9,11 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import untra.driver.IXml;
 
-public class Klass implements IXml<Klass>, Idata {
+public class Klass extends DatabaseObject implements IXml<Klass>, Idata {
 	private static final char DEFAULT_VALUE = 'D';
-	private static final int[] GAINS_DEFAULT = {1,1,1,1,1,4,9,15,19,24,29,35,41,44,49,55};
+	private static final int[] GAINS_DEFAULT = {1,1,1,1,1,3,6,10,15,21,28,36,45,55,56,57};
 
 	// public int id;
-	public String name;
-	public int id;
 	public char HPv; // 0
 	public char SPv; // 1
 	public char POWv; // 2
@@ -26,14 +24,12 @@ public class Klass implements IXml<Klass>, Idata {
 	public char SPDv; // 7
 	public char ATKv; // 8
 	public char DEFv; // 9
-//	public Weapon_Type wpn_A;
-//	public Weapon_Type wpn_B;
-	public Race race;
+	//public Race race;
 	public int[] skills;
-	/**
-	 * the set of levels these skills are gained at
-	 */
-	public int[] gains;
+	//public int skl_0, skl_1, skl_2, skl_3, skl_4,skl_5,skl_6,skl_7,skl_8,skl_9,skl_a,skl_b,skl_c,skl_d;
+	//these are the levels that skills 14 and 15 are learned at
+	
+	public int sp1, sp2;
 
 	public Klass() {
 		id = 0;
@@ -50,9 +46,10 @@ public class Klass implements IXml<Klass>, Idata {
 		DEFv = DEFAULT_VALUE;
 //		wpn_A = Weapon_Type.none;
 //		wpn_B = Weapon_Type.none;
-		race = Race.Human;
+//		race = Race.Human;
 		skills = new int[16];
-		gains = GAINS_DEFAULT;
+		sp1 = 60;
+		sp2 = 60;
 	}
 
 	public static Klass K_WARRIOR()
@@ -60,8 +57,8 @@ public class Klass implements IXml<Klass>, Idata {
 		Klass klass = new Klass();
 		klass.id = 11;
 		klass.name = "Warrior";
-		klass.HPv = 'B';
-		klass.SPv = 'C';
+		klass.HPv = 'C';
+		klass.SPv = 'D';
 		klass.POWv = 'A';
 		klass.SKLv = 'F';
 		klass.MNDv = 'D';		
@@ -70,7 +67,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.MOVv = 'D';
 		klass.ATKv = 'B';
 		klass.DEFv = 'B';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
@@ -89,7 +86,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.SPDv = 'B';
 		klass.ATKv = 'C';
 		klass.DEFv = 'C';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
@@ -108,7 +105,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.SPDv = 'B';
 		klass.ATKv = 'D';
 		klass.DEFv = 'D';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
@@ -117,8 +114,8 @@ public class Klass implements IXml<Klass>, Idata {
 		Klass klass = new Klass();
 		klass.id = 14;
 		klass.name = "Monk";
-		klass.HPv = 'C';
-		klass.SPv = 'C';
+		klass.HPv = 'A';
+		klass.SPv = 'D';
 		klass.POWv = 'C';
 		klass.SKLv = 'C';
 		klass.MNDv = 'C';
@@ -127,7 +124,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.SPDv = 'C';
 		klass.ATKv = 'C';
 		klass.DEFv = 'C';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
@@ -146,7 +143,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.SPDv = 'D';
 		klass.ATKv = 'D';
 		klass.DEFv = 'D';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
@@ -165,11 +162,16 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.SPDv = 'C';
 		klass.ATKv = 'D';
 		klass.DEFv = 'D';
-		klass.race = Race.Human;
+//		klass.race = Race.Human;
 		return klass;
 	}
 	
-	
+	/**
+	 * returns a positive integer designating an increase in a particular stat
+	 * @param b
+	 * @param rand
+	 * @return
+	 */
 	public int advance(int b, Random rand) {
 		int table = -1;
 		char check = 'F';
@@ -177,21 +179,27 @@ public class Klass implements IXml<Klass>, Idata {
 		case 0:
 			check = HPv;
 			table = 0;
+			break;
 		case 1:
 			check = SPv;
 			table = 0;
+			break;
 		case 2:
 			check = POWv;
 			table = 1;
+			break;
 		case 3:
 			check = SKLv;
 			table = 1;
+			break;
 		case 4:
 			check = MNDv;
 			table = 1;
+			break;
 		case 7:
 			check = SPDv;
-			table = 2;
+			table = 1;
+			break;
 		default:
 			break;
 		}
@@ -199,15 +207,15 @@ public class Klass implements IXml<Klass>, Idata {
 		case 0: {
 			switch (check) {
 			case 'A':
-				return (byte) rand.nextInt(5) + 3;// 6.5
+				return (byte) rand.nextInt(5) + 4;// 6.5
 			case 'B':
-				return (byte) rand.nextInt(4) + 3;// 5.5
+				return (byte) rand.nextInt(3) + 4;// 5.5
 			case 'C':
 				return (byte) rand.nextInt(3) + 3;// 4.5
 			case 'D':
-				return (byte) rand.nextInt(2) + 3;// 3.5
+				return (byte) rand.nextInt(3) + 2;// 3.5
 			default:
-				return (byte) rand.nextInt(1) + 3;// 2.5
+				return (byte) rand.nextInt(1) + 2;// 2.5
 			}
 		}
 		case 1: {
@@ -224,27 +232,31 @@ public class Klass implements IXml<Klass>, Idata {
 				return (byte) rand.nextInt(2);// 1.0
 			}
 		}
-
-		case 2: {
-			switch (check) {
-			case 'A':
-				return (byte) rand.nextInt(1) + 2;// 2.5
-			case 'B':
-				return (byte) rand.nextInt(2) + 1;// 2.0
-			case 'C':
-				return (byte) rand.nextInt(3);// 1.5
-			case 'D':
-				return (byte) rand.nextInt(2);// 1.0
-			default:
-				return (byte) rand.nextInt(1);// 0.5
-			}
-		}
 		default:
 			break;
 		}
 		return 0;
 	}
 
+	/**
+	 * Returns the positive integer of the skill a character is set to gain this level through their class
+	 * otherwise returns -1
+	 * @param level
+	 * @return
+	 */
+	public int newSkill(int level)
+	{
+		int[] gains = GAINS_DEFAULT;
+		gains[14] = sp1;
+		gains[15] = sp2;
+		for(int i = 0; i < 16; i++)
+		{
+			if(gains[i] == level)
+				return skills[i];
+		}
+		return -1;
+	}
+	
 	/**
 	 * returns a value from -1 ~ 3 indicating the bonus given from the Class
 	 * property indicated
@@ -308,7 +320,7 @@ public class Klass implements IXml<Klass>, Idata {
 //		this.wpn_B.xmlWrite(xml);
 //		xml.pop();
 		xml.element("race");
-		this.race.xmlWrite(xml);
+//		this.race.xmlWrite(xml);
 		xml.pop();
 		xml.pop();
 
@@ -331,7 +343,7 @@ public class Klass implements IXml<Klass>, Idata {
 		klass.VSNv = element.get("VSNv").charAt(0);
 		//klass.wpn_A = wpn_A.xmlRead(element.getChildByName("wpn_A"));
 		//klass.wpn_B = wpn_A.xmlRead(element.getChildByName("wpn_B"));
-		klass.race = race.xmlRead(element.getChildByName("race"));
+//		klass.race = race.xmlRead(element.getChildByName("race"));
 		readcount++;
 		return klass;
 	}
@@ -373,8 +385,8 @@ public class Klass implements IXml<Klass>, Idata {
 		//klass.wpn_B = Weapon_Type.values()[in.nextInt()];
 		System.out.println("Race");
 		System.out.println(Race.toOrdinalString());
-		System.out.print("Race:");
-		klass.race = Race.values()[in.nextInt()];
+//		System.out.print("Race:");
+//		klass.race = Race.values()[in.nextInt()];
 		return klass;
 	}
 

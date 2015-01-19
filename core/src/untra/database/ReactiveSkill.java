@@ -2,13 +2,16 @@ package untra.database;
 
 public class ReactiveSkill extends Skill {
 	//TRIGGERS: end of turn, critical hp, on_hit
-	public static final int R_START_INDEX = 4000;
+	public static final int R_START_INDEX = 1000;
 	//AT CRITICAL HP
-	public static final int R_CRIT_HASTE = 4001;
+	public static final int R_CRIT_HASTE = 1001;
 	//AT HIT
-	public static final int R_HIT_COUNTER = 4101; //attempt to counter
+	public static final int R_HIT_COUNTER = 1101; //attempt to counter
 	//ON TARGETED
-	public static final int R_TARGET_REFLEX = 4201; //dodge all basic attacks
+	public static final int R_TARGET_REFLEX = 1201; //dodge all basic attacks
+	public static final int R_TARGET_ARCHERS_REFLEX = 1202; //dodge all missile attacks
+	public static final int R_TARGET_RETURN_VOLLEY = 1203; //return all missile attacks
+			
 	
 
 	

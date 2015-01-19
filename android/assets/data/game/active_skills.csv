@@ -1,0 +1,101 @@
+id;name;description;scope;target;element;sp_cost;power;variance;is_spell;is_line;range;anim_use_id;anim_hit_id;common_event_id;field;accuracy;status;status_chance;ATKv;DEFv;SPDv;EVAv;ACCv
+0;NULL;??!!?;1;1;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+1;Heal 1;Heals a target ally nearby;1;1;0;6;-1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+2;Heal 2;Heals a target ally from afar;1;1;0;15;-1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+3;Heal 3;Greatly Heals a target Ally from afar;1;1;0;50;-2;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+4;Heal 4;Greatly Heals a target Ally far away;1;1;0;120;-2;0.15;TRUE;FALSE;5;0;0;0;0;1;0;0;0;0;0;0;0
+5;Detox 1;Removes any status condition of a nearby Ally;1;1;0;18;0;0;TRUE;FALSE;3;0;0;0;0;1;0;1;0;0;0;0;0
+6;Detox 2;Removes negative status conditions of Allies nearby.;1;1;0;36;0;0;TRUE;FALSE;0;0;0;0;2;1;0;1;0;0;0;0;0
+7;Aura 1;Heals nearby Allies;1;1;0;50;-0.75;0.15;TRUE;FALSE;2;0;0;0;1;1;0;0;0;0;0;0;0
+8;Aura 2;Heals more nearby allies;1;1;0;120;-1;0.15;TRUE;FALSE;3;0;0;0;2;1;0;0;0;0;0;0;0
+9;First Aid;TODO: Set This;1;1;0;4;-0.25;0;FALSE;FALSE;0;0;0;0;0;1;0;0;0;0;0;0;0
+10;Nurse;TODO: Set This;1;1;0;8;-0.25;0;FALSE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+11;Pyro 1;TODO: Set This;1;0;1;10;1.25;0.15;TRUE;FALSE;2;0;0;0;0;1;8;0.25;0;0;0;0;0
+12;Pyro 2;TODO: Set This;1;0;1;25;1.25;0.15;TRUE;FALSE;2;0;0;0;1;1;8;0.5;0;0;0;0;0
+13;Pyro 3;TODO: Set This;1;0;1;75;1.75;0.15;TRUE;FALSE;3;0;0;0;1;1;8;0.5;0;0;0;0;0
+14;Pyro 4;TODO: Set This;1;0;1;200;1.75;0.15;TRUE;FALSE;3;0;0;0;2;1;8;1;0;0;0;0;0
+15;Rend ATK;lower target enemies ATK by 1;1;0;0;12;1;0.15;FALSE;FALSE;1;0;0;0;0;1;0;0;-1;0;0;0;0
+16;Rend DEF;lower target enemies DEF by 1;1;0;0;12;1;0.15;FALSE;FALSE;1;0;0;0;0;1;0;0;0;-1;0;0;0
+17;Rend SPD;lower target enemies SPD by 1 ;1;0;0;12;1;0.15;FALSE;FALSE;1;0;0;0;0;1;0;0;0;0;-1;0;0
+18;Rend Special;Damage is done to the targets SP stat;1;0;0;12;1;0.15;FALSE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+19;Lucky Strike;Slightly lower damage, randomly raises 1 stat;1;0;0;8;0.75;0.15;FALSE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+20;Dispel;Removes target enemies positive buff;1;0;0;16;0;0;TRUE;FALSE;2;0;0;0;0;1;0;1;0;0;0;0;0
+21;Cryo 1;TODO: Set This;1;0;2;8;1;0.15;TRUE;FALSE;2;0;0;0;0;1;15;0;0;0;0;0;0
+22;Cryo 2;TODO: Set This;1;0;2;20;1.25;0.15;TRUE;FALSE;2;0;0;0;0;1;15;0.25;0;0;0;0;0
+23;Cryo 3;TODO: Set This;1;0;2;64;1.5;0.15;TRUE;FALSE;2;0;0;0;0;1;15;0.5;0;0;0;0;0
+24;Cryo 4;TODO: Set This;1;0;2;160;1.75;0.15;TRUE;FALSE;2;0;0;0;0;1;15;1;0;0;0;0;0
+25;Thieve;Damages and studies the opponent;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+26;Mug Coin;TODO: Set This;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+27;Steal Weapon;TODO: Set This;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+28;Steal Armor;TODO: Set This;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+29;Steal Accessory;TODO: Set This;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+30;Mow Down;An attack with a chance to paralyze the enemy;1;0;0;16;1;0.15;FALSE;FALSE;1;3;0.5;0;0;1;0;0;0;0;0;0;0
+31;Shock 1;TODO: Set This;1;0;3;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1.2;0;0;0;0;0;0;0
+32;Shock 2;TODO: Set This;1;0;3;20;1.5;0.15;TRUE;FALSE;3;0;0;0;0;1.2;0;0;0;0;0;0;0
+33;Shock 3;TODO: Set This;1;0;3;64;1.5;0.15;TRUE;FALSE;4;0;0;0;0;1.2;3;0.5;0;0;0;0;0
+34;Shock 4;TODO: Set This;1;0;3;160;2;0.15;TRUE;FALSE;5;0;0;0;0;1.2;3;1;0;0;0;0;0
+35;Pummel;Attack that also damages the target behind him;1;0;0;8;1;0.15;FALSE;TRUE;2;0;0;0;0;1;0;0;0;0;0;0;0
+36;Deft Strike;Inflicts Addle;1;0;0;8;1;0.15;FALSE;FALSE;1;0;0;0;0;1;14;1;0;0;0;0;0
+37;Meditate;Raises the users ACC and EVA;1;1;0;24;0;0;FALSE;FALSE;0;0;0;0;0;1;0;0;0;0;0;1;1
+38;Guard;Raises the users ATK and DEF;1;1;0;24;0;0;FALSE;FALSE;0;0;0;0;0;1;0;0;1;1;0;0;0
+39;War Cry;Raises surrounding Allies ATK;1;1;0;42;0;0;TRUE;FALSE;0;0;0;0;1;1;0;0;1;0;0;0;0
+40;Battle Chant;Raises surrounding Allies DEF;1;1;0;42;0;0;TRUE;FALSE;0;0;0;0;1;1;0;0;0;1;0;0;0
+41;Hydro 1;TODO: Set This;1;0;4;8;1;0.5;TRUE;FALSE;2;0;0;0;0;1;0;0;0;0;0;0;0
+42;Hydro 2;TODO: Set This;1;0;4;20;1.25;0.5;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+43;Hydro 3;TODO: Set This;1;0;4;64;1.5;0.5;TRUE;FALSE;4;0;0;0;0;1;13;0.5;0;0;0;0;0
+44;Hydro 4;TODO: Set This;1;0;4;160;1.75;0.5;TRUE;FALSE;0;0;0;0;2;1;13;0.5;0;0;0;0;0
+45;Provoke;Enrages the target, making them persue the enemy recklessly;1;0;0;16;0;0;TRUE;FALSE;2;0;0;0;0;1;7;1;0;0;0;0;0
+46;TriStrike;Randomly does either fire,electric or ice damage with a chance to inflict a status;1;0;0;20;1.25;0.15;FALSE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+47;Ultima Strike;A powerful attack with heavy damage;1;0;0;64;2;0.15;FALSE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+48;Knockout Strike;A lower damage attack with a chance to put the enemy to sleep;1;0;0;12;0.75;0.15;FALSE;FALSE;1;0;0;0;0;1;9;0.5;0;0;0;0;0
+49;Body Slam;A stronger attack that damages the user;1;0;0;24;1.5;0.15;FALSE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+50;Focus;Increases users ACC;1;1;0;12;0;0;TRUE;FALSE;0;0;0;0;0;1;0;0;0;0;0;0;1
+51;Terra 1;TODO: Set This;1;0;5;8;1.5;0.15;TRUE;TRUE;1;0;0;0;0;1;0;0;0;0;0;0;0
+52;Terra 2;TODO: Set This;1;0;5;20;1.75;0.15;TRUE;TRUE;2;0;0;0;0;1;11;0.25;0;0;0;0;0
+53;Terra 3;TODO: Set This;1;0;5;64;2;0.15;TRUE;TRUE;3;0;0;0;0;1;11;0.5;0;0;0;0;0
+54;Terra 4;TODO: Set This;1;0;5;160;2.5;0.15;TRUE;TRUE;4;0;0;0;0;1;11;1;0;0;0;0;0
+55;Leg Shot;Does lower damage and inflicts immbolize on the target;1;0;0;12;0.25;0.15;FALSE;FALSE;-1;0;0;0;0;1;11;0;0;0;0;0;0
+56;Arm Shot;Does lower damage and inflicts Disable on the target;1;0;0;12;0.25;0.15;FALSE;FALSE;-1;0;0;0;0;1;12;0;0;0;0;0;0
+57;Head Shot;Does lower damage and inflicts Blind on the target;1;0;0;16;0.25;0.15;FALSE;FALSE;-1;0;0;0;0;1;10;0;0;0;0;0;0
+58;Flash Shot;A damaging attack that ignore the targets Reaction abilities;1;0;0;12;1;0.15;FALSE;FALSE;-1;0;0;0;0;1;0;0;0;0;0;0;0
+59;Cupid Shot;Does lower damage and inflicts Blind on the target;1;0;0;20;0.25;0.15;FALSE;FALSE;-1;0;0;0;0;1;6;0;0;0;0;0;0
+60;Ultima Shot;A powerful attack with heavy damage;1;0;0;64;2;0.15;FALSE;FALSE;-1;0;0;0;0;1;0;0;0;0;0;0;0
+61;Zephyr 1;TODO: Set This;1;0;6;6;1;0.15;TRUE;FALSE;2;0;0;1;0;0.75;12;0.25;0;0;0;0;0
+62;Zephyr 2;TODO: Set This;1;0;6;15;1;0.15;TRUE;FALSE;3;0;0;1;0;0.75;12;0.5;0;0;0;0;0
+63;Zephyr 3;TODO: Set This;1;0;6;50;1;0.15;TRUE;FALSE;4;0;0;1;0;0.75;12;0.75;0;0;0;0;0
+64;Zephyr 4;TODO: Set This;1;0;6;120;1;0.15;TRUE;FALSE;5;0;0;1;0;0.75;12;1;0;0;0;0;0
+65;Study;Studies the enemy and learns their weaknesses;1;0;0;4;0;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+66;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+67;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+68;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+69;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+70;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+71;Bio 1;TODO: Set This;1;0;7;8;1;0.15;TRUE;FALSE;2;0;0;0;0;1;0;0;0;0;0;0;0
+72;Bio 2;TODO: Set This;1;0;7;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+73;Bio 3;TODO: Set This;1;0;7;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+74;Bio 4;TODO: Set This;1;0;7;8;1;0.15;TRUE;FALSE;3;0;0;0;1;1;0;0;0;0;0;0;0
+75;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+76;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+77;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+78;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+79;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+80;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+81;Mecha 1;TODO: Set This;1;0;8;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+82;Mecha 2;TODO: Set This;1;0;8;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+83;Mecha 3;TODO: Set This;1;0;8;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+84;Mecha 4;TODO: Set This;1;0;8;8;1;0.15;TRUE;FALSE;3;0;0;0;0;1;0;0;0;0;0;0;0
+85;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+86;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+87;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+88;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+89;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+90;NULL;??!!?;1;0;0;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+91;Necro 1;TODO: Set This;1;0;9;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;0;0;0;0;0;0;0
+92;Necro 2;TODO: Set This;1;0;9;8;1;0.15;TRUE;FALSE;1;0;0;0;0;1;2;0.25;0;0;0;0;0
+93;Necro 3;TODO: Set This;1;0;9;8;1;0.15;TRUE;FALSE;1;0;0;0;1;1;2;0.5;0;0;0;0;0
+94;Necro 4;TODO: Set This;1;0;9;8;1;0.15;TRUE;FALSE;0;0;0;0;2;1;2;1;0;0;0;0;0
+95;Sunshine;Opens the skies to bright rays of sunshine;1;3;0;96;0;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+96;Rainstorm;Brings forth a sudden thunderstorm;1;3;0;96;0;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+97;Snowstorm;Hail begins to fall onto the battlefield;1;3;0;96;0;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+98;Sandstorm;A sandstorm whips up dust around the battlefield;1;3;0;96;0;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0
+99;Fog;A thick fog rolls into the battlefield, decreasing the liklihood of critical/multi/knockback;1;3;0;96;0;0.15;TRUE;FALSE;1;0;0;1;0;1;0;0;0;0;0;0;0

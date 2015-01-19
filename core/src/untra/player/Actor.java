@@ -28,18 +28,13 @@ public class Actor implements IXml<Actor> {
 	public boolean playable_character;
 	public String Name;
 	public Klass cclass;
-	//public Race race;
-	// public boolean is_male;
+	public Race _race;
+	//public boolean is_male;
 	public int LEVEL;
 	public int EXP;
-	// public int N_EXP;
-	// public boolean is_monster;
-
-	// public Item[] items;
-	//public ArrayList<Skill> skills;
 	public SkillSet skills;
-
 	public Weapon weapon = new Weapon();
+	//public Weapon rhand = new Weapon();
 	public Armor armor = new Armor();
 
 	/**
@@ -52,16 +47,15 @@ public class Actor implements IXml<Actor> {
 	public int SP;
 	// private Skill_Type _damage_factor;
 
-	public ArrayList<Elemental> elementals;
 	private int _maxhp;
 	// private int _maxhp_plus;
 	private int _maxsp;
 	// private int _maxsp_plus;
 	private int _MOV;
 	private int _VSN;
-	private int _SPD;
 	private int _ATK;
 	private int _DEF;
+	private int _SPD;
 	private int _POW;
 	private int _SKL;
 	private int _MND;
@@ -80,7 +74,7 @@ public class Actor implements IXml<Actor> {
 
 	// TODO finish
 	public Race getRace() {
-		return cclass.race;
+		return _race;
 	}
 
 	/**
@@ -184,7 +178,7 @@ public class Actor implements IXml<Actor> {
 
 	public int MAX_HP() {
 
-		int n = (_maxhp + _maxhp);
+		int n = (_maxhp);
 		n += armor.HPP;
 		n = Math.max(Math.min(n, 999), 1);
 		return (int) n;
@@ -214,8 +208,6 @@ public class Actor implements IXml<Actor> {
 		s += (cclass.bonus(8) * 5);
 		s += _ATK;
 		s += weapon.ATK;
-		s += (getRace() == Race.Emberborn || getRace() == Race.Undead) ? 4 : 0;
-		s += (getRace() == Race.Fey) ? -2 : 0;
 		float f = 1.0f;
 		s *= f;
 		s = Math.max(Math.min(s, 255), 1);
@@ -227,12 +219,8 @@ public class Actor implements IXml<Actor> {
 
 	public int DEF() {
 		int s = 1;
-		s += (cclass.bonus(9) * 5);
 		s += _DEF;
 		s += armor.DEF;
-		s += (getRace() == Race.Emberborn || getRace() == Race.Undead
-				|| getRace() == Race.Aquatic || getRace() == Race.Beast) ? -2
-				: 0;
 		// if (armor.HasValue) s += armor.Value.DEF;
 		s = Math.max(Math.min(s, 255), 1);
 		float f = 1.0f;
@@ -290,7 +278,7 @@ public class Actor implements IXml<Actor> {
 		_MND = Math.max(Math.min(_MND, 255), -255);
 	}
 
-	public Actor(Klass c, int level) {
+	public Actor(Klass c, Race r, String name, int level) {
 		// Temp
 		skills = new SkillSet(this);
 		// items = new Item[6];
@@ -300,21 +288,24 @@ public class Actor implements IXml<Actor> {
 		Random temp_rand = new Random();
 		if (level > 60 || level < 1)
 			throw new IndexOutOfBoundsException("level value out of bounds)");
-		Name = "TEMPORARY";
+		Name = name;
 		cclass = c;
+		_race = r;
 		LEVEL = level;
-		_maxhp = 5;
-		_maxsp = 4;
-
-		_MOV = 0;
-		_VSN = 0;
-		_SPD = 0;
-
-		_POW = 1;
-		_SKL = 1;
-		_MND = 1;
+		
+		int[] stats = r.racialstats();
+		_maxhp = stats[0];
+		_maxsp = stats[1];
+		_POW = stats[2];
+		_SKL = stats[3];
+		_MND = stats[4];
+		_SPD = stats[5];
+		_MOV = stats[6];
+		_VSN = stats[7];
+		_ATK = stats[8];
+		_DEF = stats[9];
+		
 		EXP = 0;
-		_SPD = 0;
 		weapon = Database.weapons[0];
 		// N_EXP = (48 * level);
 		state = Status._;
@@ -330,10 +321,6 @@ public class Actor implements IXml<Actor> {
 			_MND += c.advance(4, temp_rand);
 			_SPD += c.advance(7, temp_rand);
 		}
-		// SP = _maxsp;
-		// HP = _maxhp;
-		_ATK = 0;
-		_DEF = 0;
 		// Monsters do not wield weapons, so their attack is automatically
 		// generated.
 		/*
@@ -383,11 +370,9 @@ public class Actor implements IXml<Actor> {
 
 	public int MOV() {
 
-		int n = (cclass.bonus(5) + _MOV + 3);
+		int n = (cclass.bonus(5) + _MOV);
 		n += weapon.MOV;
 		n += armor.MOV;
-		n += (getRace() == Race.Ratmen) ? 1 : 0;
-		n += (getRace() == Race.Undead || getRace() == Race.Fauna) ? -1 : 0;
 		float f = 1.0f;
 		n *= f;
 		n = Math.max(Math.min(n, 16), 1);
@@ -403,11 +388,9 @@ public class Actor implements IXml<Actor> {
 	}
 
 	public int getVSN() {
-		int n = (cclass.bonus(6) + _VSN + 4);
+		int n = (cclass.bonus(6) + _VSN);
 		n += weapon.VSN;
 		n += armor.VSN;
-		n += (getRace() == Race.Ratmen) ? 1 : 0;
-		n += (getRace() == Race.Undead) ? -1 : 0;
 		n = Math.max(Math.min(n, 16), 1);
 		n = Math.max(Math.min(n, 255), 1);
 		return (int) n;
@@ -432,10 +415,6 @@ public class Actor implements IXml<Actor> {
 		n += armor.SPD;
 		n -= armor.type == Armor_Type.medium ? 12 : 0;
 		n -= armor.type == Armor_Type.heavy ? 24 : 0;
-		n += (getRace() == Race.Emberborn || getRace() == Race.Undead || getRace() == Race.Fauna) ? -5
-				: 0;
-		n += (getRace() == Race.Avis || getRace() == Race.Ratmen || getRace() == Race.Canid) ? 5
-				: 0;
 		float f = 1.0f;
 		n *= f;
 		n = Math.max(Math.min(n, 255), 1);
@@ -505,7 +484,7 @@ public class Actor implements IXml<Actor> {
 	@Override
 	public Actor xmlRead(Element element) {
 		Klass klass = Database.classes[element.getInt("Class")];
-		Actor actor = new Actor(klass, 5);
+		Actor actor = new Actor(klass, Race.Human, "name", 5);
 		actor.Name = element.get("Name");
 		actor.playable_character = element.getBoolean("PC");
 		actor.LEVEL = element.getInt("LVL");

@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import untra.database.Database;
+import untra.database.Klass;
 
 public class Base implements ApplicationListener {
 
@@ -40,7 +41,7 @@ public class Base implements ApplicationListener {
 	public static final String windowskin_texture_border = "W_skin";
 	public static final String windowskin_texture_background = "Backcolor";
 	public static final String default_font_name = "m16.fnt";
-	public static final String small_font_name = "m8.fnt";
+	public static final String small_font_name = "m12.fnt";
 	public static final int Magic_Number = 256;
 	public static final int tile_pixel_width = 56; // minimum map width is 23
 	public static boolean DEBUG = false;
@@ -134,7 +135,7 @@ public class Base implements ApplicationListener {
 		s_batch.setProjectionMatrix(oCam.combined);
 		// party initialization
 		party = new Party();
-		Actor actor = new Actor(Database.classes[9], 8);
+		Actor actor = new Actor(Klass.K_MONK(), 15);
 		//actor.skills.add(Database.skills[1]);
 		party.Members.add(actor);
 		//

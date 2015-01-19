@@ -13,6 +13,7 @@ import untra.driver.IGamecycle;
 
 public class Window implements IGamecycle {
 
+	protected static final int BOXCORNER = 4;
 	protected static final int FRAMESTOPAN = 16;
 	protected static final int MINIMUMPIXELSTOPANIN = 8;
 	protected boolean panInWindow = false;
@@ -173,6 +174,31 @@ public class Window implements IGamecycle {
 		}
 	}
 
+	public void draw_bounding_box(Draw_Object s_batch, float x, float y, float w, float h)
+	{
+		int exp = BOXCORNER;
+		// Draw the corners
+		x -= exp;
+		y -= exp;
+		s_batch.draw(cornerTexture, x, y, false, true);
+		x += (w - exp);
+		s_batch.draw(cornerTexture, x, y, true, true);
+		y += (h - exp);
+		s_batch.draw(cornerTexture, x, y, true, false);
+		x -= (w - exp);
+		s_batch.draw(cornerTexture, x, y, false, false);
+		y -= (h - exp);
+		// Draw the sides
+		s_batch.draw(sideTexture, x, y + exp, 2 * exp, h - (2 * exp), false,
+				!true);
+		s_batch.draw(sideTexture, x + w - exp, y + exp, 2 * exp, h - (2 * exp),
+				true, !false);
+		s_batch.draw(barTexture, x + exp, y, w - (2 * exp), 2 * exp, false,
+				!false);
+		s_batch.draw(barTexture, x + exp, y + h - exp, w - (2 * exp), 2 * exp,
+				true, !true);
+	}
+	
 	public void draw(Draw_Object s_batch) {
 
 		if (active != previousactive && panInWindow)
@@ -189,33 +215,8 @@ public class Window implements IGamecycle {
 		float y = coordinates.getY() + remainingPanY;
 		float w = coordinates.getWidth();
 		float h = coordinates.getHeight();
-		// s_batch.draw(borderTexture, 200, 200);
-		// s_batch.draw(backTexture, x, y, w - (2 * exp), h - (2 * exp));
-		s_batch.draw(backTexture, x - 2, y - 2, w - exp + 1, h - exp + 1);
-		// Draw the corners
-		x -= exp;
-		y -= exp;
-		s_batch.draw(cornerTexture, x, y, false, !false);
-		x += (w - exp);
-		s_batch.draw(cornerTexture, x, y, true, !false);
-		y += (h - exp);
-		s_batch.draw(cornerTexture, x, y, true, !true);
-		x -= (w - exp);
-		s_batch.draw(cornerTexture, x, y, false, !true);
-		y -= (h - exp);
-		// Draw the sides
-		s_batch.draw(sideTexture, x, y + exp, 2 * exp, h - (2 * exp), false,
-				!true);
-		s_batch.draw(sideTexture, x + w - exp, y + exp, 2 * exp, h - (2 * exp),
-				true, !false);
-		s_batch.draw(barTexture, x + exp, y, w - (2 * exp), 2 * exp, false,
-				!false);
-		s_batch.draw(barTexture, x + exp, y + h - exp, w - (2 * exp), 2 * exp,
-				true, !true);
-		// s_batch.draw(, y + exp, exp, exp, true,
-		// true);
-		// s_batch.draw(sideTexture, x + exp, y + h - exp, w - (2 * exp), exp,
-		// false, true);
+		s_batch.draw(backTexture, x - 2, y - 2, w - exp + 1, h - BOXCORNER +1);
+		draw_bounding_box(s_batch, x, y, w, h);
 
 	}
 
